@@ -1,15 +1,26 @@
 import java.util.Scanner;
 
 public class App {
+    static String[] names = new String[100];
+    static String[] emails = new String[100];
+    static String[] passwords = new String[100];
+    static int index = 0;
+    static Scanner keyIn = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String[] names = new String[100];
-        String[] emails = new String[100];
-        String[] passwords = new String[100];
+        inputMembers();
+        printMembers();
         
-        int index = 0;
-        Scanner keyIn = new Scanner(System.in);
-        
+        keyIn.close();
+    }
+    
+    static void printMembers(){
+        for(int i=0;i<index;i++) {
+            System.out.printf("%s, %s, %s\n", names[i], emails[i], passwords[i]);
+        }
+    }
+    
+    static void inputMembers() {
         while(true) {
             System.out.print("이름? ");
             names[index] = keyIn.nextLine();
@@ -26,10 +37,6 @@ public class App {
                 break;
             }
         }
-        for(int i=0;i<index;i++) {
-            System.out.printf("%s, %s, %s\n", names[i], emails[i], passwords[i]);
-        }
-        
-        keyIn.close();
     }
+    
 }
