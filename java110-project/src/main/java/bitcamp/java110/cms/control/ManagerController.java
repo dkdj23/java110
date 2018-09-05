@@ -33,7 +33,8 @@ public class ManagerController {
         for(Manager s:managers) {
             if(cnt++ == managerindex)
                 break;
-            System.out.printf("%s, %s, %s, %s, [%s]\n"
+            System.out.printf("%d: %s, %s, %s, %s, [%s]\n"
+                    , cnt-1
                     , s.getName()
                     , s.getEmail()
                     , s.getPassword()
@@ -58,6 +59,10 @@ public class ManagerController {
             System.out.println("포지션? ");
             m.setPosition(keyIn.nextLine());
             
+            if(managerindex == managers.length) {
+                increaseStorage();
+            }
+            
             managers[managerindex++] = m;
             
             System.out.println("계속 하시겠습니까?(Y/n)");;
@@ -76,11 +81,52 @@ public class ManagerController {
                 printManagers();
             }else if("add".equals(command)){
                 inputManagers();
+            }else if("delete".equals(command)){
+                deleteManagers();
+            }else if("detail".equals(command)){
+                detailManagers();
             }else if("quit".equals(command)){
                 break;
             }else {
                 System.out.println("유효하지 않는 명령입니다.");
             }
         }
+    }
+    
+    private static void increaseStorage() {
+        Manager[] newList = new Manager[managers.length+3];
+        for(int i=0;i<managers.length;i++) {
+            newList[i]=managers[i];
+        }
+        managers=newList;
+    }
+    
+    private static void deleteManagers(){
+        System.out.print("삭제할 번호? ");
+        int no = Integer.parseInt(keyIn.nextLine());
+        if(no < 0 || no >= managerindex) {
+            System.out.println("무효한 번호입니다.");
+            return;
+        }
+        
+        for(int i=no;i<=managerindex-2;i++) {
+            managers[i] = managers[i+1];
+        }
+        managerindex-=1;
+        System.out.println("삭제하였습니다.");
+    }
+    
+    private static void detailManagers(){
+        System.out.print("조회할 번호? ");
+        int no = Integer.parseInt(keyIn.nextLine());
+        if(no < 0 || no >= managerindex) {
+            System.out.println("무효한 번호입니다.");
+            return;
+        }
+        System.out.printf("이름: %s\n", managers[no].getName());
+        System.out.printf("이메일: %s\n", managers[no].getEmail());
+        System.out.printf("암호: %s\n", managers[no].getPassword());
+        System.out.printf("전화: %s\n", managers[no].getTel());
+        System.out.printf("포지션: %b\n", managers[no].getPosition());
     }
 }
