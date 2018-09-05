@@ -1,7 +1,7 @@
 # java110
 비트캠프 **자바 110기** 실습 프로젝트
 
-##java110-project (tag: v0.7)
+## java110-project (tag: v0.7)
 -배열 목록 처리 추가
 StudentList 에도 Student 가 필요하게 되어 Student를 별도 class 로 분리함.
 배열을 파일, db 로 바꾸더라도 StudentList 만 수정하면 되기때문에 유지보수성이 좋음
