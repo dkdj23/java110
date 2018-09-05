@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class App {
     
     // 여러 속성의 값을 관리하기 쉽도록 사용자 정의 데이터 타입을 만들어 사용한다.
-    class Member{
+    static class Member{
         protected String name;
         protected String email;
         protected String password;
@@ -48,7 +48,7 @@ public class App {
     
     static void inputMembers() {
         while(true) {
-            App.Member m = App.new Member();
+            Member m = new Member();
             
             System.out.print("이름? ");
             m.setName(keyIn.nextLine());
