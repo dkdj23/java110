@@ -1,14 +1,19 @@
 package bitcamp.java110.cms.control;
 import java.util.Scanner;
 
-import bitcamp.java110.cms.dao.StudentList;
 import bitcamp.java110.cms.domain.Student;
+import bitcamp.java110.cms.util.ArrayList;
 
 public class StudentController {
 
-    public static Scanner keyIn;
+    private ArrayList students = new ArrayList();
+    public Scanner keyIn;
     
-    public static void serviceStudentMenu() {
+    public StudentController(Scanner keyIn) {
+        this.keyIn = keyIn;
+    }
+    
+    public void serviceStudentMenu() {
         while(true) {
             System.out.print("학생 관리> ");
             String command = keyIn.nextLine();
@@ -28,9 +33,9 @@ public class StudentController {
         }
     }
     
-    private static void printStudents(){
-        for(int i=0; i<StudentList.size();i++) {
-            Student s = StudentList.get(i);
+    private void printStudents(){
+        for(int i=0; i<students.size();i++) {
+            Student s = (Student) students.get(i);
             System.out.printf("%d: %s, %s, %s, %s, %b, %s\n"
                     , i
                     , s.getName()
@@ -44,7 +49,7 @@ public class StudentController {
     
     
 
-    private static void inputStudents() {
+    private void inputStudents() {
         while(true) {
             Student m = new Student();
             
@@ -61,7 +66,7 @@ public class StudentController {
             System.out.println("전화번호? ");
             m.setTel(keyIn.nextLine());
             
-            StudentList.add(m);
+            students.add(m);
             
             System.out.println("계속 하시겠습니까?(Y/n)");;
             String answer = keyIn.nextLine();
@@ -72,27 +77,27 @@ public class StudentController {
         
     }
     
-    private static void deleteStudents(){
+    private void deleteStudents(){
         System.out.print("삭제할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
-        if(no < 0 || no >= StudentList.size()) {
+        if(no < 0 || no >= students.size()) {
             System.out.println("무효한 번호입니다.");
             return;
         }
-        StudentList.remove(no);
+        students.remove(no);
         
         System.out.println("삭제하였습니다.");
     }
     
-    private static void detailStudents(){
+    private void detailStudents(){
         System.out.print("조회할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
-        if(no < 0 || no >= StudentList.size()) {
+        if(no < 0 || no >= students.size()) {
             System.out.println("무효한 번호입니다.");
             return;
         }
         
-        Student student = StudentList.get(no);
+        Student student = (Student) students.get(no);
         
         System.out.printf("이름: %s\n", student.getName());
         System.out.printf("이메일: %s\n", student.getEmail());
@@ -102,21 +107,21 @@ public class StudentController {
         System.out.printf("재직여부: %b\n", student.isWorking());
     }
     
-    static {
+    { // 인스턴스 블럭  - 생성자보다 먼저 실행됨.  static 블록-클래스가 로딩된후 실행
         Student s = new Student();
         s.setName("a");
-        StudentList.add(s);
+        students.add(s);
         s = new Student();
         s.setName("b");
-        StudentList.add(s);
+        students.add(s);
         s = new Student();
         s.setName("c");
-        StudentList.add(s);
+        students.add(s);
         s = new Student();
         s.setName("d");
-        StudentList.add(s);
+        students.add(s);
         s = new Student();
         s.setName("e");
-        StudentList.add(s);
+        students.add(s);
     }
 }
