@@ -19,8 +19,10 @@ public class LinkedList<T> {
     }
     
     public T get(int index) {
-        Node<T> cursor = first;
+        if(checkIndex(index))
+            return null;
         
+        Node<T> cursor = first;
         for(int count=0;count<index;count++) {
             cursor = cursor.next;
         }
@@ -28,15 +30,56 @@ public class LinkedList<T> {
     }
     
     public T remove(int index) {
-        return null;
+        if(checkIndex(index))
+            return null;
+        
+        length--;
+        
+        Node<T> cursor = first;
+        for(int count=0;count<index;count++) {
+            cursor = cursor.next;
+        }
+        
+        if(cursor == first) {
+            first = cursor.next;
+            first.prev = null;
+            return cursor.value;
+        }
+        
+        (cursor.prev).next = cursor.next;
+        (cursor.next).prev = cursor.prev;
+        
+        return cursor.value;
     }
     
     public void insert(int index, T obj) {
+        if(checkIndex(index))
+            return;
+        length ++;
         
+        Node<T> node = new Node<>();
+        node.value = obj;
+        
+        Node<T> cursor = first;
+        for(int count=0;count<index;count++) {
+            cursor = cursor.next;
+        }
+        
+        if(cursor != first) {
+            cursor.prev.next = node;
+            node.prev = cursor.prev;
+        }
+        
+        cursor.prev = node;
+        node.next = cursor;
     }
     
     public int size() {
         return length;
+    }
+    
+    private boolean checkIndex(int i) {
+        return i<0||i>=length;
     }
     
     class Node<E> {
