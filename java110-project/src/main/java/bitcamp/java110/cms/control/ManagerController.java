@@ -2,15 +2,16 @@ package bitcamp.java110.cms.control;
 import java.util.Scanner;
 
 import bitcamp.java110.cms.domain.Manager;
-import bitcamp.java110.cms.util.LinkedList;
+import bitcamp.java110.cms.util.List;
 
 
 public class ManagerController {
-    private LinkedList<Manager> managers = new LinkedList<>();
+    private List<Manager> managers; // LinkedList 든 ArrayList 든  상관없이 사용가능.
     public Scanner keyIn;
     
-    public ManagerController(Scanner keyIn) {
+    public ManagerController(Scanner keyIn, List<Manager> managers) {
         this.keyIn = keyIn;
+        this.managers = managers;
     }
     
     private void printManagers(){

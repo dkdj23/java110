@@ -1,7 +1,7 @@
 package bitcamp.java110.cms.util;
 
 
-public class ArrayList<T> {
+public class ArrayList<T> implements List<T> {
     private Object[] list = new Object[100];
     private int index = 0;
     
@@ -21,14 +21,19 @@ public class ArrayList<T> {
         list=newList;
     }
     
-    public void remove(int no) {
+    public T remove(int no) {
         if(no < 0 || no >= index) {
-            return;
+            return null;
         }
+        @SuppressWarnings("unchecked")
+        T removedObj = (T) list[no];
+        
         for(int i=no;i<=index-2;i++) {
             list[i] = list[i+1];
         }
         index-=1;
+        
+        return removedObj;
     }
     
     public int size() {
