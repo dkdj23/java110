@@ -1,6 +1,8 @@
 # java110
 비트캠프 **자바 110기** 실습 프로젝트
 
+## tag: v0.9
+- 제네릭 활용법  
 ## tag: v0.8
 - 목록을 다루는 클래스들을 리팩토링  
 - StudentList, ManagerList, TeacherList 클래스를 한 클래스로 합침  
