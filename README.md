@@ -1,6 +1,10 @@
 # java110
 비트캠프 **자바 110기** 실습 프로젝트
 
+## tag: v0.8
+- 목록을 다루는 클래스들을 리팩토링  
+- StudentList, ManagerList, TeacherList 클래스를 한 클래스로 합침  
+- 다형적 변수를 사용하여 Student, Manager, Teacher 객체를 모두 저장할 수 있도록 함  
 ## tag: v0.7
 - 배열 목록 처리 추가  
 StudentList 에도 Student 가 필요하게 되어 Student를 별도 class 로 분리함.  
