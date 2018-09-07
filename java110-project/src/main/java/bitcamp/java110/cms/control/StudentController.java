@@ -4,29 +4,27 @@ import java.util.Scanner;
 
 import bitcamp.java110.cms.domain.Student;
 
-public class StudentController {
+public class StudentController implements Controller {
 
     private List<Student> students;
-    public Scanner keyIn;
     
-    public StudentController(Scanner keyIn, List<Student> students) {
-        this.keyIn = keyIn;
+    public StudentController(List<Student> students) {
         this.students = students;
         init();
     }
     
-    public void serviceStudentMenu() {
+    public void service(Scanner keyIn) {
         while(true) {
             System.out.print("학생 관리> ");
             String command = keyIn.nextLine();
             if("list".equals(command)) {
                 printStudents();
             }else if("add".equals(command)){
-                inputStudents();
+                inputStudents(keyIn);
             }else if("delete".equals(command)){
-                deleteStudents();
+                deleteStudents(keyIn);
             }else if("detail".equals(command)){
-                detailStudents();
+                detailStudents(keyIn);
             }else if("quit".equals(command)){
                 break;
             }else {
@@ -51,7 +49,7 @@ public class StudentController {
     
     
 
-    private void inputStudents() {
+    private void inputStudents(Scanner keyIn) {
         while(true) {
             Student m = new Student();
             
@@ -79,7 +77,7 @@ public class StudentController {
         
     }
     
-    private void deleteStudents(){
+    private void deleteStudents(Scanner keyIn){
         System.out.print("삭제할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
         if(no < 0 || no >= students.size()) {
@@ -91,7 +89,7 @@ public class StudentController {
         System.out.println("삭제하였습니다.");
     }
     
-    private void detailStudents(){
+    private void detailStudents(Scanner keyIn){
         System.out.print("조회할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
         if(no < 0 || no >= students.size()) {

@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import bitcamp.java110.cms.control.Controller;
 import bitcamp.java110.cms.control.ManagerController;
 import bitcamp.java110.cms.control.StudentController;
 import bitcamp.java110.cms.control.TeacherController;
@@ -14,24 +16,29 @@ public class App {
     static Scanner keyIn = new Scanner(System.in);
 
     public static void main(String[] args) {
-        StudentController sc = new StudentController(
-                keyIn, new LinkedList<Student>());
-        TeacherController tc = new TeacherController(
-                keyIn, new ArrayList<Teacher>());
-        ManagerController mc = new ManagerController(
-                keyIn, new ArrayList<Manager>());
+        HashMap<String,Controller> requestHandlerMapping =
+                new HashMap<>();
+        
+        requestHandlerMapping.put("1", 
+                new StudentController(new LinkedList<Student>()));
+        requestHandlerMapping.put("2",
+                new TeacherController(new ArrayList<Teacher>()));
+        requestHandlerMapping.put("3",
+                new ManagerController(new ArrayList<Manager>()));
         while(true) {
             String menu = promptMenu();
             
-            if("1".equals(menu)) {
-                sc.serviceStudentMenu();
-            }else if("2".equals(menu)){
-                tc.serviceTeacherMenu();
-            }else if("3".equals(menu)){
-                mc.serviceManagerMenu();
-            }else if("0".equals(menu)){
+            if("0".equals(menu)){
                 System.out.println("안녕히 가세요!");
                 break;
+            }
+            
+            Controller controller = requestHandlerMapping.get(menu);
+            
+            if(controller != null) {
+                controller.service(keyIn);
+            }else {
+                System.out.println("해당 메뉴가 없습니다.");
             }
         }
         keyIn.close();

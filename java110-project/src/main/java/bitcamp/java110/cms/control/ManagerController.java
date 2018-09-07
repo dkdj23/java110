@@ -5,13 +5,31 @@ import java.util.Scanner;
 import bitcamp.java110.cms.domain.Manager;
 
 
-public class ManagerController {
+public class ManagerController implements Controller {
     private List<Manager> managers; // LinkedList 든 ArrayList 든  상관없이 사용가능.
-    public Scanner keyIn;
     
-    public ManagerController(Scanner keyIn, List<Manager> managers) {
-        this.keyIn = keyIn;
+    public ManagerController(List<Manager> managers) {
         this.managers = managers;
+    }
+    
+    public void service(Scanner keyIn) {
+        while(true) {
+            System.out.println("매니저 관리> ");
+            String command = keyIn.nextLine();
+            if("list".equals(command)) {
+                printManagers();
+            }else if("add".equals(command)){
+                inputManagers(keyIn);
+            }else if("delete".equals(command)){
+                deleteManagers(keyIn);
+            }else if("detail".equals(command)){
+                detailManagers(keyIn);
+            }else if("quit".equals(command)){
+                break;
+            }else {
+                System.out.println("유효하지 않는 명령입니다.");
+            }
+        }
     }
     
     private void printManagers(){
@@ -28,7 +46,7 @@ public class ManagerController {
     }
     
     
-    private void inputManagers(){
+    private void inputManagers(Scanner keyIn){
         while(true) {
             Manager m = new Manager();
             
@@ -52,29 +70,8 @@ public class ManagerController {
             }
         }
     }
-    
-    public void serviceManagerMenu() {
-        while(true) {
-            System.out.println("매니저 관리> ");
-            String command = keyIn.nextLine();
-            if("list".equals(command)) {
-                printManagers();
-            }else if("add".equals(command)){
-                inputManagers();
-            }else if("delete".equals(command)){
-                deleteManagers();
-            }else if("detail".equals(command)){
-                detailManagers();
-            }else if("quit".equals(command)){
-                break;
-            }else {
-                System.out.println("유효하지 않는 명령입니다.");
-            }
-        }
-    }
-    
-    
-    private void deleteManagers(){
+     
+    private void deleteManagers(Scanner keyIn){
         System.out.print("삭제할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
         if(no < 0 || no >= managers.size()) {
@@ -85,7 +82,7 @@ public class ManagerController {
         System.out.println("삭제하였습니다.");
     }
     
-    private void detailManagers(){
+    private void detailManagers(Scanner keyIn){
         System.out.print("조회할 번호? ");
         int no = Integer.parseInt(keyIn.nextLine());
         if(no < 0 || no >= managers.size()) {
