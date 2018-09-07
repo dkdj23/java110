@@ -43,22 +43,12 @@ public class App {
         System.out.println("1.학생 관리");
         System.out.println("2.강사 관리");
         System.out.println("3.매니저 관리");
+        System.out.println("4.인사");
         System.out.println("0.종료");
         
-        while(true) {
-            System.out.println("메뉴 번호>");
-            String menu = keyIn.nextLine();
+        System.out.println("메뉴 번호>");
+        String menu = keyIn.nextLine();
         
-            switch(menu)
-            {
-                case "0":
-                case "1":
-                case "2":
-                case "3":
-                    return menu;
-                default:
-                    System.out.println("메뉴 번호가 유효하지 않습니다");
-            }
-        }
+        return menu;
     }
 }
