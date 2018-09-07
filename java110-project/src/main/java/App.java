@@ -1,22 +1,16 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Scanner;
 
+import bitcamp.java110.cms.context.ApplicationContext;
 import bitcamp.java110.cms.control.Controller;
-import bitcamp.java110.cms.control.ManagerController;
-import bitcamp.java110.cms.control.StudentController;
-import bitcamp.java110.cms.control.TeacherController;
-import bitcamp.java110.cms.domain.Manager;
-import bitcamp.java110.cms.domain.Student;
-import bitcamp.java110.cms.domain.Teacher;
 
 public class App {
     
     static Scanner keyIn = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        HashMap<String,Controller> requestHandlerMapping =
+    public static void main(String[] args) throws Exception {
+        ApplicationContext iocContainer = 
+                new ApplicationContext("bitcamp.java110.cms.control");
+ /*       HashMap<String,Controller> requestHandlerMapping =
                 new HashMap<>();
         
         requestHandlerMapping.put("1", 
@@ -24,7 +18,7 @@ public class App {
         requestHandlerMapping.put("2",
                 new TeacherController(new ArrayList<Teacher>()));
         requestHandlerMapping.put("3",
-                new ManagerController(new ArrayList<Manager>()));
+                new ManagerController(new ArrayList<Manager>()));*/
         while(true) {
             String menu = promptMenu();
             
@@ -33,7 +27,7 @@ public class App {
                 break;
             }
             
-            Controller controller = requestHandlerMapping.get(menu);
+            Controller controller = (Controller)iocContainer.getBean(menu);
             
             if(controller != null) {
                 controller.service(keyIn);
