@@ -1,6 +1,5 @@
 package bitcamp.java110.cms.control.student;
 
-import java.util.List;
 import java.util.Scanner;
 
 import bitcamp.java110.cms.App;
@@ -29,7 +28,12 @@ public class StudentAddController {
             System.out.println("전화번호? ");
             m.setTel(keyIn.nextLine());
             
-            App.students.add(m);
+            if (App.studentDao.insert(m) > 0) {
+                System.out.println("저장하였습니다.");
+            } else {
+                System.out.println("같은 이메일의 학생이 존재합니다.");
+            }
+                
             
             System.out.println("계속 하시겠습니까?(Y/n)");;
             String answer = keyIn.nextLine();
@@ -42,18 +46,23 @@ public class StudentAddController {
     { // 인스턴스 블럭  - 생성자보다 먼저 실행됨.  static 블록-클래스가 로딩된후 실행
         Student s = new Student();
         s.setName("a");
-        App.students.add(s);
+        s.setEmail("a@test.com");
+        App.studentDao.insert(s);
         s = new Student();
         s.setName("b");
-        App.students.add(s);
+        s.setEmail("b@test.com");
+        App.studentDao.insert(s);
         s = new Student();
         s.setName("c");
-        App.students.add(s);
+        s.setEmail("c@test.com");
+        App.studentDao.insert(s);
         s = new Student();
         s.setName("d");
-        App.students.add(s);
+        s.setEmail("d@test.com");
+        App.studentDao.insert(s);
         s = new Student();
         s.setName("e");
-        App.students.add(s);
+        s.setEmail("e@test.com");
+        App.studentDao.insert(s);
     }
 }
