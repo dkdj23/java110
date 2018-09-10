@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import bitcamp.java110.cms.annotation.Component;
+import bitcamp.java110.cms.annotation.RequestMapping;
 import bitcamp.java110.cms.domain.Manager;
 
-@Component("3")
-public class ManagerController implements Controller {
+@Component("manager")
+public class ManagerController {
     private List<Manager> managers = new ArrayList<>(); // LinkedList 든 ArrayList 든  상관없이 사용가능.
     
-    public void service(Scanner keyIn) {
+    @RequestMapping
+    public void manager(Scanner keyIn) {
         while(true) {
             System.out.println("매니저 관리> ");
             String command = keyIn.nextLine();
