@@ -32,48 +32,18 @@ public class ApplicationContext {
         // 로딩된 클래스 목록을 뒤져서 @Component 가 붙은 클래스에 대해 인스턴스를 생성하여 objPool에 보관한다.
         createInstance();
         
+        // 객체 생성 후 작업을 수행하는 클래스가 있다면 찾아서 호출한다.
+        callBeanPostProcessor();
+        
         // 의존 객체 주입 - objPool에 보관된 객체를 꺼내 @Autowired가 붙은 셋터를 찾아 호출한다.
-        injectDependency();
+//        injectDependency();
         
         // 1) 인스턴스 생성
         // 해당 패키지에 있는 클래스를 찾아서 인스턴스를 생성한 후에
         // objPool에 보관한다.
     }
     
-    private void injectDependency() {
-        Collection<Object> objList = objPool.values();
-        
-        for(Object obj:objList) {
-            Method[] methods = obj.getClass().getDeclaredMethods();
-            for(Method m : methods) {
-                if (!m.isAnnotationPresent(Autowired.class))
-                    continue;
-                
-                // setter 메서드의 파라미터 타입을 알아낸다. 
-                Class<?> paramType = m.getParameterTypes()[0];
-                
-                // 그 파라미터 타입과 일치하는 객체를 objPool에서 꺼낸다.
-                Object dependency = getBean(paramType);
-                
-                if (dependency == null) continue;
-                
-                // setter 호출
-                try {
-                    m.invoke(obj, dependency);
-                    System.out.printf("%s() 호출됨\n",m.getName());
-                } catch (IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+    
 
     public Object getBean(String name)
     {
@@ -165,4 +135,20 @@ public class ApplicationContext {
             }
         }
     }
+    
+    private void callBeanPostProcessor() {
+        Collection<Object> objList = objPool.values();
+        
+        // => objPool에 보관된 객체 중에서 BeanPostProcessor 규칙을
+        //    준수하는 객체를 찾는다.
+        
+        for(Object obj : objList) {
+            if (!BeanPostProcessor.class.isInstance(obj)) continue;
+            
+            BeanPostProcessor processor = (BeanPostProcessor) obj;
+            processor.postProcess(this);
+                
+        }
+    }
+    
 }
