@@ -98,10 +98,10 @@ public class ManagerFile2Dao implements ManagerDao {
         for (Manager item : list) {
             if (item.getEmail().equals(email)) {
                 list.remove(item);
+                save();
                 return 1;
             }
         }
-        save();
         return 0;
     }
 }
