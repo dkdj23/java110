@@ -11,7 +11,7 @@ import java.util.List;
 import bitcamp.java110.cms.annotation.Component;
 import bitcamp.java110.cms.domain.Student;
 
-@Component
+//@Component
 public class StudentFileDao implements StudentDao {
     
     private List<Student> list = new ArrayList<>();
