@@ -9,6 +9,7 @@ import bitcamp.java110.cms.dao.StudentDao;
 
 @Component
 public class StudentDeleteController {
+    
     StudentDao studentDao;
     
     @Autowired
@@ -17,9 +18,10 @@ public class StudentDeleteController {
     }
     
     @RequestMapping("student/delete")
-    public void delete(Scanner keyIn){
+    public void delete(Scanner keyIn) {
         System.out.print("삭제할 학생의 이메일? ");
         String email = keyIn.nextLine();
+        
         if (studentDao.delete(email) > 0) {
             System.out.println("삭제하였습니다.");
         } else {

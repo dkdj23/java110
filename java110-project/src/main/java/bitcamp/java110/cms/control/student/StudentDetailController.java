@@ -10,15 +10,16 @@ import bitcamp.java110.cms.domain.Student;
 
 @Component
 public class StudentDetailController {
+    
     StudentDao studentDao;
     
     @Autowired
     public void setStudentDao(StudentDao studentDao) {
         this.studentDao = studentDao;
     }
-
+    
     @RequestMapping("student/detail")
-    public void detail(Scanner keyIn){
+    public void detail(Scanner keyIn) {
         System.out.print("조회할 학생의 이메일? ");
         String email = keyIn.nextLine();
         Student student = studentDao.findByEmail(email);
