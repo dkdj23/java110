@@ -40,8 +40,12 @@ public class ManagerAddController {
             System.out.print("직위? ");
             m.setPosition(keyIn.nextLine());
             
-            managerDao.insert(m);
-            System.out.println("저장하였습니다.");
+            try {
+                managerDao.insert(m);
+                System.out.println("저장하였습니다.");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             
             System.out.print("계속 하시겠습니까?(Y/n) ");
             String answer = keyIn.nextLine();
