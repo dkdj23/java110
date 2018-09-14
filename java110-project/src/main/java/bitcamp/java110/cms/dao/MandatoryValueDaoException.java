@@ -14,5 +14,5 @@ public class MandatoryValueDaoException extends RuntimeException {
     public MandatoryValueDaoException(String message) {
         super(message);
     }
-
+    
 }

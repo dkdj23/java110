@@ -39,6 +39,7 @@ public class App {
                 System.out.println("해당 메뉴가 없습니다.");
                 continue;
             }
+            
             try {
                 mapping.getMethod().invoke(mapping.getInstance(), keyIn);
             } catch (Exception e) {

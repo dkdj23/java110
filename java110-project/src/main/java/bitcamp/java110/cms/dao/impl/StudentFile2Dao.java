@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import bitcamp.java110.cms.annotation.Component;
 import bitcamp.java110.cms.dao.DuplicationDaoException;
 import bitcamp.java110.cms.dao.MandatoryValueDaoException;
 import bitcamp.java110.cms.dao.StudentDao;
@@ -18,23 +17,25 @@ import bitcamp.java110.cms.domain.Student;
 
 //@Component
 public class StudentFile2Dao implements StudentDao {
-    static final String defaultFilename = "data/student2.dat";
+    
+    static String defaultFilename = "data/student2.dat";
+    
     String filename;
     private List<Student> list = new ArrayList<>();
     
     @SuppressWarnings("unchecked")
     public StudentFile2Dao(String filename) {
         this.filename = filename;
+        
         File dataFile = new File(filename);
         try (
-            BufferedInputStream in1 = 
-                new BufferedInputStream(new FileInputStream(dataFile)); 
-            ObjectInputStream in = new ObjectInputStream(in1); 
+            FileInputStream in0 = new FileInputStream(dataFile);
+            BufferedInputStream in1 = new BufferedInputStream(in0);
+            ObjectInputStream in = new ObjectInputStream(in1);
         ){
-            list = (List<Student>) in.readObject();
+            list = (List<Student>)in.readObject();
         } catch (Exception e) {
-//            e.printStackTrace();
-            System.out.println(e.getStackTrace());
+            e.printStackTrace();
         }
     }
     
@@ -45,9 +46,9 @@ public class StudentFile2Dao implements StudentDao {
     private void save() {
         File dataFile = new File(filename);
         try (
-             BufferedOutputStream  out1 =
-                new BufferedOutputStream(new FileOutputStream(dataFile));
-             ObjectOutputStream out = new ObjectOutputStream(out1);
+            FileOutputStream out0 = new FileOutputStream(dataFile);
+            BufferedOutputStream out1 = new BufferedOutputStream(out0);
+            ObjectOutputStream out = new ObjectOutputStream(out1);
         ){
             out.writeObject(list);
         } catch (Exception e) {
@@ -56,11 +57,10 @@ public class StudentFile2Dao implements StudentDao {
     }
     
     public int insert(Student student) {
+        // 필수 입력 항목이 비었을 때,
         if (student.getName().length() == 0 ||
             student.getEmail().length() == 0 ||
             student.getPassword().length() == 0) {
-                
-            // 호출자에게 예외 정보를 만들어 던진다.
             throw new MandatoryValueDaoException();
         }
         for (Student item : list) {
@@ -90,10 +90,10 @@ public class StudentFile2Dao implements StudentDao {
         for (Student item : list) {
             if (item.getEmail().equals(email)) {
                 list.remove(item);
-                save();
                 return 1;
             }
         }
+        save();
         return 0;
     }
 }

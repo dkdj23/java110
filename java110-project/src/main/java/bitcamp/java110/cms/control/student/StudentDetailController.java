@@ -25,11 +25,10 @@ public class StudentDetailController {
         Student student = studentDao.findByNo(no);
         
         if (student == null) {
-            System.out.println("번호의 학생 정보가 없습니다!");
+            System.out.println("해당 번호의 학생 정보가 없습니다!");
             return;
         }
         
-        System.out.printf("번호: %s\n", student.getNo());
         System.out.printf("이름: %s\n", student.getName());
         System.out.printf("이메일: %s\n", student.getEmail());
         System.out.printf("암호: %s\n", student.getPassword());
