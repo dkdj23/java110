@@ -3,7 +3,7 @@ package bitcamp.java110.cms.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import bitcamp.java110.cms.annotation.Component;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DataSource {
@@ -17,7 +17,7 @@ public class DataSource {
                     "jdbc:mariadb://localhost:3306/studydb", 
                     "study", "1111");
         }
-        return con;
+        
+        return this.con;
     }
-
 }
