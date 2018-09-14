@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class ClientApp {
     
+    
     static Scanner keyIn = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
@@ -29,7 +30,8 @@ public class ClientApp {
             
             while (true) {
                 String requestLine = prompt();
-                out.println(requestLine); out.flush();
+                out.println(requestLine); 
+                out.flush();
                 while (true) {
                     String responseLine = in.readLine();
                     System.out.println(responseLine);
@@ -38,11 +40,9 @@ public class ClientApp {
                 }
                 if (requestLine.equals("EXIT")){
                     break;
-                } 
+                }
             }
-            
         }
-        
         keyIn.close();
     }
 
