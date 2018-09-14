@@ -7,13 +7,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import bitcamp.java110.cms.annotation.Autowired;
 import bitcamp.java110.cms.annotation.Component;
 import bitcamp.java110.cms.dao.DaoException;
 import bitcamp.java110.cms.dao.ManagerDao;
 import bitcamp.java110.cms.domain.Manager;
+import bitcamp.java110.cms.util.DataSource;
 
 @Component
 public class ManagerMysqlDao implements ManagerDao {
+    
+    DataSource dataSource;
+    
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     
     public int insert(Manager manager) {
         Connection con = null;
@@ -21,10 +30,7 @@ public class ManagerMysqlDao implements ManagerDao {
         
         try {
             
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
+            con = dataSource.getConnection();
             
             // 매니저 정보를 입력할 때 p1_memb 테이블과 p1_mgr 테이블에 
             // 매니저 정보를 분산 입력 해야 한다.
@@ -63,11 +69,11 @@ public class ManagerMysqlDao implements ManagerDao {
             con.commit();
             return 1;
         } catch (Exception e) {
+            try { con.rollback(); } catch(Exception e2) {} 
             throw new DaoException(e);
             
         } finally {
             try {stmt.close();} catch (Exception e) {}
-            try {con.close();} catch (Exception e) {}
         }
     }
     
@@ -80,7 +86,6 @@ public class ManagerMysqlDao implements ManagerDao {
         ResultSet rs = null;
         
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
             //=> java.sql.Driver 구현체를 로딩한다.
             //=> 해당 클래스의 객체를 만들어 DriverManager에 등록한다.
             
@@ -88,9 +93,7 @@ public class ManagerMysqlDao implements ManagerDao {
             //=> DriverManager는 등록된 Driver 들 중에서 요구 사항에 맞는
             //   드라이버를 찾아 connect()를 호출한다.
             //   그리고 connect() 메서드의 리턴 값을 그대로 리턴해 준다.
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
+            con = dataSource.getConnection();
             
             //=> 질의문을 작성할 객체를 준비한다.
             stmt = con.createStatement();
@@ -128,54 +131,8 @@ public class ManagerMysqlDao implements ManagerDao {
         } finally {
             try {rs.close();} catch (Exception e) {}
             try {stmt.close();} catch (Exception e) {}
-            try {con.close();} catch (Exception e) {}
         }
         return list;
-    }
-    
-    public Manager findByEmail(String email) {
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
-            
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(
-                    "select" + 
-                    " m.mno," +
-                    " m.name," + 
-                    " m.email," + 
-                    " m.tel," + 
-                    " mr.posi" + 
-                    " from p1_mgr mr" + 
-                    " inner join p1_memb m on mr.mrno = m.mno" +
-                    " where m.email='" + email + "'");
-            
-            if (rs.next()) {
-                Manager mgr = new Manager();
-                mgr.setNo(rs.getInt("mno"));
-                mgr.setEmail(rs.getString("email"));
-                mgr.setName(rs.getString("name"));
-                mgr.setTel(rs.getString("tel"));
-                mgr.setPosition(rs.getString("posi"));
-                
-                return mgr;
-            }
-            return null;
-            
-        } catch (Exception e) {
-            throw new DaoException(e);
-            
-        } finally {
-            try {rs.close();} catch (Exception e) {}
-            try {stmt.close();} catch (Exception e) {}
-            try {con.close();} catch (Exception e) {}
-        }
     }
     
     public Manager findByNo(int no) {
@@ -184,10 +141,7 @@ public class ManagerMysqlDao implements ManagerDao {
         ResultSet rs = null;
         
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
+            con = dataSource.getConnection();
             
             stmt = con.createStatement();
             rs = stmt.executeQuery(
@@ -219,7 +173,6 @@ public class ManagerMysqlDao implements ManagerDao {
         } finally {
             try {rs.close();} catch (Exception e) {}
             try {stmt.close();} catch (Exception e) {}
-            try {con.close();} catch (Exception e) {}
         }
     }
     
@@ -228,10 +181,7 @@ public class ManagerMysqlDao implements ManagerDao {
         Statement stmt = null;
         
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
+            con = dataSource.getConnection();
             
             con.setAutoCommit(false);
             stmt = con.createStatement();
@@ -249,12 +199,18 @@ public class ManagerMysqlDao implements ManagerDao {
             return 1;
             
         } catch (Exception e) {
+            try { con.rollback(); } catch(Exception e2) {}
             throw new DaoException(e);
             
         } finally {
             try {stmt.close();} catch (Exception e) {}
-            try {con.close();} catch (Exception e) {}
         }
+    }
+
+    @Override
+    public Manager findByEmail(String email) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
 
