@@ -58,6 +58,8 @@ public class ServerApp {
         
         while (true) {
             Socket socket = serverSocket.accept();
+            System.out.println("클라이언트가 연결되었음!");
+            
             RequestWorker worker = new RequestWorker(socket);
 //            worker.start();
             new Thread(worker).start();
@@ -93,46 +95,38 @@ public class ServerApp {
                                        new InputStreamReader(
                                           socket.getInputStream()));
                 ) {
-                    System.out.println(in.readLine());
-                    out.println("OK"); out.flush();
+                    String requestLine = in.readLine();
+                    System.out.println("클라이언트 요청 받았음");
                     
-                    while (true) {
-                        String requestLine = in.readLine();
-                        
-                        if (requestLine.equals("EXIT")) {
-                            out.println("goodbye");
-                            out.println();
-                            out.flush();
-//                            System.exit(0);
-                        }
-                        
-                        // 요청 객체 준비
-                        Request request = new Request(requestLine);
-                        
-                        // 응답 객체 준비
-                        Response response = new Response(out);
-                        
-                        RequestMappingHandler mapping = 
-                                requestHandlerMap.getMapping(request.getAppPath());
-                        if (mapping == null) {
-                            System.out.println("해당 요청을 처리할 수 없습니다.");
-                            out.println();
-                            out.flush();
-                            continue;
-                        }
-                        
-                        try {
-                            // 요청 핸들로 호출
-                            mapping.getMethod().invoke(mapping.getInstance(), request, response);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            out.println("요청 처리 중에 오류가 발생했습니다.");
-                        }
+                    // 요청 객체 준비
+                    Request request = new Request(requestLine);
+                    
+                    // 응답 객체 준비
+                    Response response = new Response(out);
+                    
+                    RequestMappingHandler mapping = 
+                            requestHandlerMap.getMapping(request.getAppPath());
+                    if (mapping == null) {
+                        System.out.println("해당 요청을 처리할 수 없습니다.");
                         out.println();
                         out.flush();
+                        return;
                     }
+                    
+                    try {
+                        // 요청 핸들로 호출
+                        mapping.getMethod().invoke(mapping.getInstance(), request, response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        out.println("요청 처리 중에 오류가 발생했습니다.");
+                    }
+                    out.println();
+                    out.flush();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+            } finally {
+                System.out.println("클라이언트에게 응답 했음");
+                System.out.println("클라이언트와 연결을 끊음");
             }
         }
         
