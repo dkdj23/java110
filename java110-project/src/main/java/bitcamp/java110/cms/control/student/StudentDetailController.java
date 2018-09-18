@@ -3,6 +3,9 @@ package bitcamp.java110.cms.control.student;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,7 @@ public class StudentDetailController {
     }
     
     @RequestMapping("student/detail")
-    public void detail(Request request,Response response) {
+    public void detail(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         Student student = studentDao.findByNo(no);

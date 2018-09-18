@@ -3,6 +3,9 @@ package bitcamp.java110.cms.control.teacher;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,7 @@ public class TeacherListController {
     }
 
     @RequestMapping("teacher/list")
-    public void list(Request request,Response response) {
+    public void list(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         List<Teacher> list = teacherDao.findAll();
         

@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +27,7 @@ public class TeacherController {
     }
 
     @RequestMapping("teacher/add")
-    public void add(Request request,Response response) {
+    public void add(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         while (true) {
             Teacher m = new Teacher();
@@ -45,7 +48,7 @@ public class TeacherController {
     }
     
     @RequestMapping("teacher/delete")
-    public void delete(Request request,Response response) {
+    public void delete(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         
@@ -57,7 +60,7 @@ public class TeacherController {
     }
     
     @RequestMapping("teacher/detail")
-    public void detail(Request request,Response response) {
+    public void detail(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         Teacher t = teacherDao.findByNo(no);
@@ -76,7 +79,7 @@ public class TeacherController {
     }
     
     @RequestMapping("teacher/list")
-    public void list(Request request,Response response) {
+    public void list(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         List<Teacher> list = teacherDao.findAll();
         

@@ -3,6 +3,9 @@ package bitcamp.java110.cms.control;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,7 @@ public class ManagerController {
     }
     
     @RequestMapping("manager/add")
-    public void add(Request request, Response response) {
+    public void add(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         Manager m = new Manager();
         
@@ -39,7 +42,7 @@ public class ManagerController {
     }
     
     @RequestMapping("manager/delete")
-    public void delete(Request request, Response response) {
+    public void delete(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         
@@ -51,7 +54,7 @@ public class ManagerController {
     }
     
     @RequestMapping("manager/detail")
-    public void detail(Request request, Response response) {
+    public void detail(ServletRequest request, ServletResponse response) throws Exception {
         int no = Integer.parseInt(request.getParameter("no")); 
         PrintWriter out = response.getWriter();
         Manager m = managerDao.findByNo(no);
@@ -69,7 +72,7 @@ public class ManagerController {
     }
     
     @RequestMapping("manager/list")
-    public void list(Request request, Response response) {
+    public void list(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         List<Manager> list = managerDao.findAll();
         for (Manager s : list) {

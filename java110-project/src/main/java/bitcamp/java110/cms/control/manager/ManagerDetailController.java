@@ -2,6 +2,9 @@ package bitcamp.java110.cms.control.manager;
 
 import java.io.PrintWriter;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +25,7 @@ public class ManagerDetailController {
     }
 
     @RequestMapping("manager/detail")
-    public void detail(Request request, Response response) {
+    public void detail(ServletRequest request, ServletResponse response) throws Exception {
         int no = Integer.parseInt(request.getParameter("no")); 
         PrintWriter out = response.getWriter();
         Manager m = managerDao.findByNo(no);

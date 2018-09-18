@@ -5,6 +5,9 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +28,7 @@ public class StudentListController {
     }
 
     @RequestMapping("student/list")
-    public void list(Request request,Response response) {
+    public void list(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         List<Student> list = studentDao.findAll();
         

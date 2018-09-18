@@ -3,6 +3,9 @@ package bitcamp.java110.cms.control.teacher;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,7 @@ public class TeacherAddController {
     }
 
     @RequestMapping("teacher/add")
-    public void add(Request request,Response response) {
+    public void add(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         while (true) {
             Teacher m = new Teacher();

@@ -2,6 +2,9 @@ package bitcamp.java110.cms.control.student;
 
 import java.io.PrintWriter;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +24,7 @@ public class StudentDeleteController {
     }
     
     @RequestMapping("student/delete")
-    public void delete(Request request,Response response) {
+    public void delete(ServletRequest request, ServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         

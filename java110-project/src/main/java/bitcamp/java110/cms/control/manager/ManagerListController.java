@@ -3,6 +3,9 @@ package bitcamp.java110.cms.control.manager;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,8 @@ public class ManagerListController {
     }
 
     @RequestMapping("manager/list")
-    public void list(Request request, Response response) {
+    public void list(ServletRequest request, ServletResponse response) throws Exception {
+        
         PrintWriter out = response.getWriter();
         List<Manager> list = managerDao.findAll();
         for (Manager s : list) {
