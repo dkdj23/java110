@@ -28,7 +28,7 @@ import javax.servlet.annotation.WebServlet;
 // 서블릿 컨테이너를 다시 시작해야 적용된다.
 // 만약 이미 만든 서블릿에 대해 변경했을 경우,
 // 5초 이내에 자동으로 로딩된다.
-@WebServlet("/ex01/servlet01")
+//@WebServlet("/ex01/servlet01")
 public class Servlet01 implements Servlet {
     ServletConfig config;
     
