@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GET 요청 보내기</title>
+<!--
+action
+현재 HTML의 경로와 서버에 요청하는 자원의 경로가 일치한 부분이 있다면
+그 부분을 생략하여 상대 경로로 표시하는 것이 유지보수에 좋다.
+
+예)
+현재 경로: http://localhost:8888/ex04/form.html
+요청 경로: http://localhost:8888/ex04/servlet02
+즉 같은 경로기 때문에 action="servlet02" 만 주면 된다.
+
+mothod 속성:
+=> 생략하면 기본 값이 get 이다.
+=> get 또는 post를 지정할 수 있다. 
+ -->
+</head>
+<body>
+    <form action="servlet03" method="get">
+    <button>GET 요청</button>
+    </form>
+    
+    <form action="servlet03" method="post">
+    <button>POST 요청</button>
+    </form>
+    
+</body>
+</html>
