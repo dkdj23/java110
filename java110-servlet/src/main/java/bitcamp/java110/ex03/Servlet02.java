@@ -38,7 +38,7 @@ public class Servlet02 extends GenericServlet {
         // => 웹브라우저는 응답헤더에 포함된 콘텐트 타입의 정보를 바탕으로 콘텐트를 어떻게 처리할지 결정한다.
         //    웹브라우저가 처리할 수 없는 MIME 타입인 경우 사용자에게 다운로드로 요구한다. 
         //
-        // MIME(Multi-purpose Internet Mail Extension)
+        // MIME(Multi-purpose Internet Mail Extensions)
         // => 메일에 첨부하는 파일의 타입을 지정하기 위해 만들었다.
         // => 메일 클라이언트는 이 타입 정보를 보고 첨부 파일을 읽을 때
         //    어떤 프로그램을 사용해야 하는지 결정한다.
