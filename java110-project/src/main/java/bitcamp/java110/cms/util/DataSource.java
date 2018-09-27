@@ -3,19 +3,21 @@ package bitcamp.java110.cms.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-//@Component
 public class DataSource {
     Connection con;
     
-    public Connection getConnection() throws Exception {
-        
-        if (con == null) {
-            Class.forName("org.mariadb.jdbc.Driver");
-            con = DriverManager.getConnection(
-                    "jdbc:mariadb://localhost:3306/studydb", 
-                    "study", "1111");
-        }
-        
+    public DataSource(
+            String driver,
+            String url,
+            String username,
+            String password) throws Exception {
+        Class.forName(driver);
+        con = DriverManager.getConnection(
+                url, username, password
+              );
+    }
+    
+    public Connection getConnection() {
         return this.con;
     }
 }

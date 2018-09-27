@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java110.cms.dao.StudentDao;
 import bitcamp.java110.cms.dao.impl.StudentMysqlDao;
 import bitcamp.java110.cms.util.DataSource;
 
@@ -16,14 +17,6 @@ import bitcamp.java110.cms.util.DataSource;
 public class StudentDeleteServlet extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
-    StudentMysqlDao studentDao;
-
-    @Override
-    public void init() throws ServletException {
-        DataSource dataSource = new DataSource();
-        studentDao = new StudentMysqlDao();
-        studentDao.setDataSource(dataSource);
-    }
 
     @Override
     public void doGet(
@@ -33,6 +26,7 @@ public class StudentDeleteServlet extends HttpServlet {
         response.setContentType("text/plain;charSet=UTF-8");
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
+        StudentDao studentDao = (StudentDao) this.getServletContext().getAttribute("studentDao");
         
         if (studentDao.delete(no) > 0) {
             out.println("삭제하였습니다.");
