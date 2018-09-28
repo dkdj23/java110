@@ -1,8 +1,8 @@
 package bitcamp.java110.cms.servlet.manager;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java110.cms.dao.ManagerDao;
-import bitcamp.java110.cms.dao.impl.ManagerMysqlDao;
 import bitcamp.java110.cms.domain.Manager;
-import bitcamp.java110.cms.util.DataSource;
 
 @WebServlet("/manager/add")
 public class ManagerAddServlet extends HttpServlet { 
@@ -30,7 +28,7 @@ public class ManagerAddServlet extends HttpServlet {
         // getParameter() 호출할 때 정상적으로 디코딩 한다.
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charSet=UTF-8");
-        PrintWriter out = response.getWriter();
+        
         Manager m = new Manager();
         
         m.setName(request.getParameter("name"));
@@ -41,36 +39,27 @@ public class ManagerAddServlet extends HttpServlet {
         
         ManagerDao managerDao = (ManagerDao) this.getServletContext().getAttribute("managerDao");
         
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='EUC-KR'>");
-        out.println("<title>매니저 관리</title>");
-        out.println("<style>");
-        out.println("table,th,td{");
-        out.println("border: 1px solid gray;");
-        out.println("}");
-        out.println("table{");
-        out.println("border-collapse: collapse;"); 
-        out.println("}");
-        out.println("</style>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>매니저 등록 결과</h1>");
         
         try {
             managerDao.insert(m);
-            out.println("<p>저장하였습니다.</p>");
+            // 오류 없이 등록에 성공했으면, 목록 페이지를 다시 요청하라고 
+            // redirect 명령을 보낸다.
+            response.sendRedirect("list");
+            
         } catch(Exception e) {
-            e.printStackTrace();
-            out.println("<p>같은 이메일의 매니저가 존재합니다.</p>");
+            // 오류 내용을 처리하는 서블릿으로 실행을 위임한다.
+            RequestDispatcher rd = request.getRequestDispatcher("/error");
+            
+            // 위임하기 전에 작업을 수행하는데 필요한 정보를 ServletRequest 보관소에 담아 전달한다.
+            request.setAttribute("error", e);
+            request.setAttribute("message", "매니저 등록 오류!");
+            request.setAttribute("refresh", "3;url=list");
+            
+            // 작업을 위임한다.
+            rd.forward(request, response);
+            
         }
-        
-        out.println("</body>");
-        out.println("</html>");
-        
     }
-    
 }
     
     

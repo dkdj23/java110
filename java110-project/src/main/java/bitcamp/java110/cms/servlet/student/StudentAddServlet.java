@@ -21,7 +21,6 @@ public class StudentAddServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charSet=UTF-8");
-        PrintWriter out = response.getWriter();
 
         Student m = new Student();
         m.setName(request.getParameter("name"));
@@ -33,29 +32,15 @@ public class StudentAddServlet extends HttpServlet {
 
         StudentDao studentDao = (StudentDao) this.getServletContext().getAttribute("studentDao");
 
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='EUC-KR'>");
-        out.println("<title>학생 관리</title>");
-        out.println("<style>");
-        out.println("table,th,td{");
-        out.println("border: 1px solid gray;");
-        out.println("}");
-        out.println("table{");
-        out.println("border-collapse: collapse;");
-        out.println("}");
-        out.println("</style>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>학생 등록 결과</h1>");
-
         try {
             studentDao.insert(m);
-            out.println("<p>저장하였습니다.</p>");
+            response.sendRedirect("list");
         } catch (Exception e) {
-            e.printStackTrace();
-            out.println("<p>같은 이메일의 학생이 존재합니다.</p>");
+            request.setAttribute("error", e);
+            request.setAttribute("message", "매니저 삭제 오류!");
+            request.setAttribute("refresh", "3;url=list");
+            
+            request.getRequestDispatcher("/error").forward(request, response);
         }
     }
 }
