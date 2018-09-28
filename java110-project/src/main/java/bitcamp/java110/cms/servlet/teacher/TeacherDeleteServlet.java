@@ -21,15 +21,36 @@ public class TeacherDeleteServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) 
                     throws ServletException, IOException {
-        response.setContentType("text/plain;charSet=UTF-8");
+        response.setContentType("text/html;charSet=UTF-8");
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         TeacherDao teacherDao = (TeacherDao) this.getServletContext().getAttribute("teacherDao");
         
-        if (teacherDao.delete(no) > 0) {
-            out.println("삭제하였습니다.");
-        } else {
-            out.println("번호에 해당하는 강사가 없습니다.");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='EUC-KR'>");
+        out.println("<title>강사 관리</title>");
+        out.println("<style>");
+        out.println("table,th,td{");
+        out.println("border: 1px solid gray;");
+        out.println("}");
+        out.println("table{");
+        out.println("border-collapse: collapse;"); 
+        out.println("}");
+        out.println("</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>강사 삭제 결과</h1>");
+        
+        try {
+            teacherDao.delete(no);
+            out.println("<p>삭제하였습니다.</p>");
+        } catch(Exception e) {
+            out.println("<p>번호에 해당하는 강사가 없습니다.</p>");
         }
+        
+        out.println("</body>");
+        out.println("</html>");
     }
 }

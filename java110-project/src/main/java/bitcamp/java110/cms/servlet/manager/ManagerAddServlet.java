@@ -20,11 +20,16 @@ public class ManagerAddServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     
     @Override
-    public void doGet(
+    public void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) 
                     throws ServletException, IOException {
-        response.setContentType("text/plain;charSet=UTF-8");
+        
+        // POST 방식으로 들어온 하글 데이터는
+        // 다음 메서드를 호출하여 어떤 인코딩인지 알려줘야
+        // getParameter() 호출할 때 정상적으로 디코딩 한다.
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charSet=UTF-8");
         PrintWriter out = response.getWriter();
         Manager m = new Manager();
         
@@ -35,8 +40,34 @@ public class ManagerAddServlet extends HttpServlet {
         m.setPosition(request.getParameter("position"));
         
         ManagerDao managerDao = (ManagerDao) this.getServletContext().getAttribute("managerDao");
-        managerDao.insert(m);
-        out.println("입력성공");
+        
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='EUC-KR'>");
+        out.println("<title>매니저 관리</title>");
+        out.println("<style>");
+        out.println("table,th,td{");
+        out.println("border: 1px solid gray;");
+        out.println("}");
+        out.println("table{");
+        out.println("border-collapse: collapse;"); 
+        out.println("}");
+        out.println("</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>매니저 등록 결과</h1>");
+        
+        try {
+            managerDao.insert(m);
+            out.println("<p>저장하였습니다.</p>");
+        } catch(Exception e) {
+            e.printStackTrace();
+            out.println("<p>같은 이메일의 매니저가 존재합니다.</p>");
+        }
+        
+        out.println("</body>");
+        out.println("</html>");
         
     }
     

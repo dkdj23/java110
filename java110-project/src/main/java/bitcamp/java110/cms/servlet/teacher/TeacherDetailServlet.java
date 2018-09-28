@@ -22,22 +22,66 @@ public class TeacherDetailServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) 
                     throws ServletException, IOException {
-        response.setContentType("text/plain;charSet=UTF-8");
+        response.setContentType("text/html;charSet=UTF-8");
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
         TeacherDao teacherDao = (TeacherDao) this.getServletContext().getAttribute("teacherDao");
         Teacher t = teacherDao.findByNo(no);
         
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='EUC-KR'>");
+        out.println("<title>강사 관리</title>");
+        out.println("<style>");
+        out.println("table,th,td{");
+        out.println("border: 1px solid gray;");
+        out.println("}");
+        out.println("table{");
+        out.println("border-collapse: collapse;"); 
+        out.println("}");
+        out.println("</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>강사 상세정보</h1>");
+        
         if (t == null) {
-            System.out.println("해당 번호의 강사 정보가 없습니다!");
-            return;
+            out.println("<p>해당 번호의 강사 정보가 없습니다!</p>");
+        } else {
+            out.println("<table>");
+            out.println("<thead>");
+            out.println("<tr>");
+            out.println("<th>번호</th>");
+            out.println("<th>이름</th>");
+            out.println("<th>이메일</th>");
+            out.println("<th>암호</th>");
+            out.println("<th>전화</th>");
+            out.println("<th>시급</th>");
+            out.println("<th>강의과목</th>");
+            out.println("</tr>");
+            out.println("<tbody>");
+            out.println("<tr>");
+            out.printf("<td>%d</td>\n",t.getNo());
+            out.printf("<td>%s</td>\n",t.getName());
+            out.printf("<td>%s</td>\n",t.getEmail());
+            out.printf("<td>%s</td>\n",t.getPassword());
+            out.printf("<td>%s</td>\n",t.getTel());
+            out.printf("<td>%d</td>\n",t.getPay());
+            out.printf("<td>%s</td>\n",t.getSubjects());
+            out.println("</tr>");
+            out.println("</tbody>");
+            out.println("</table>");
+            
+            out.println("<button type='button' onclick='remove()'>삭제</button>");
         }
         
-        out.printf("이름: %s\n", t.getName());
-        out.printf("이메일: %s\n", t.getEmail());
-        out.printf("암호: %s\n", t.getPassword());
-        out.printf("전화: %s\n", t.getTel());
-        out.printf("시급: %d\n", t.getPay());
-        out.printf("강의과목: %s\n", t.getSubjects());
+        out.println("<script>");
+        out.println("function remove() {");
+        out.printf("location.href = 'delete?no=%d';\n", t.getNo());
+        out.println("}");
+        out.println("</script>");
+        
+        out.println("</body>");
+        out.println("</html>");
     }
 }

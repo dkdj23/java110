@@ -28,8 +28,10 @@
         <param-name>jdbc.password</param-name>
         <param-value>1111</param-value>
     </context-param>
-
-    <!-- <request-character-encoding>UTF-8</request-character-encoding> -->
+    <!-- 
+            다음 태그가 지원이 안되는 경우,
+    request.setCharacterEncoding() 으로 POST 요청 데이터를 처리해야 한다.
+    <request-character-encoding>UTF-8</request-character-encoding> -->
 
     <!-- 서블릿 클래스에 대한 정보 설명 -->
 
