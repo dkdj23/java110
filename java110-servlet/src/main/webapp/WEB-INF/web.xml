@@ -73,7 +73,10 @@
         <url-pattern>/ex06/servlet05</url-pattern>
     </servlet-mapping>
     
-    
+    <!--  세션의 타임아웃 설정(단위: 분) -->
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
 
     <!--  클라이언트가 요청한 URL에 대해 정적 파일을 찾을 때 우선 순위 -->
     <welcome-file-list>

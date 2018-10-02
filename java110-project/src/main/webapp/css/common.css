@@ -15,8 +15,11 @@ header > h1 {
 	background-size: contain;
 }
 
-li {
+header ul {
 	float: right;
+}
+
+header li {
 	list-style: none;
 	display: inline-block;
 	margin: 0 5px;
