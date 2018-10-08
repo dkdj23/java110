@@ -34,6 +34,16 @@
     <request-character-encoding>UTF-8</request-character-encoding> -->
 
     <!-- 서블릿 클래스에 대한 정보 설명 -->
+    <servlet>
+       <servlet-name>error</servlet-name>
+       <jsp-file>/error.jsp</jsp-file> 
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+
 
     <listener>
         <listener-class>bitcamp.java110.cms.listener.ContextLoaderListener</listener-class>

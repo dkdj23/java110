@@ -1,7 +1,6 @@
 package bitcamp.java110.cms.servlet.teacher;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,7 @@ public class TeacherDeleteServlet extends HttpServlet {
         } catch(Exception e) {
             request.setAttribute("error", e);
             request.setAttribute("message", "매니저 삭제 오류!");
-            request.setAttribute("refresh", "3;url=list");
+//            request.setAttribute("refresh", "3;url=list");
             
             request.getRequestDispatcher("/error").forward(request, response);
         }

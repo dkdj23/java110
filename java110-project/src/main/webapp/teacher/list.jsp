@@ -1,3 +1,5 @@
+<%@page import="bitcamp.java110.cms.domain.Teacher"%>
+<%@page import="bitcamp.java110.cms.domain.Student"%>
 <%@ page import="bitcamp.java110.cms.domain.Manager"%>
 <%@ page import="java.util.List"%>
 <%@ page import="bitcamp.java110.cms.dao.ManagerDao"%>
@@ -10,7 +12,7 @@
 <html>
 <head>
 <meta charset='EUC-KR'>
-<title>매니저 관리</title>
+<title>강사 관리</title>
 <link rel='stylesheet' href='/css/common.css'>
 <style>
 table, th, td {
@@ -24,7 +26,7 @@ table {
 </head>
 <body>
 	<jsp:include page="../header.jsp"/>
-	<h1>매니저 목록(MVC)</h1>
+	<h1>강사 목록(MVC)</h1>
 	<p>
 		<a href='add'>추가</a>
 	</p>
@@ -34,26 +36,26 @@ table {
 				<th>번호</th>
 				<th>이름</th>
 				<th>이메일</th>
-				<th>직위</th>
+				<th>시급</th>
+				<th>강의과목</th>
 			</tr>
 		</thead>
 		<tbody>
-		
-		<jsp:useBean id="list" 
-		scope="request"
-		type="java.util.List<Manager>"
-		class="java.util.ArrayList"/>
+        <jsp:useBean id="list" 
+        scope="request"
+        type="java.util.List<Teacher>"
+        class="java.util.ArrayList"/>   		
 		<%
-		  //List<Manager> list = (List<Manager>) request.getAttribute("list");
+		  //List<Teacher> list = (List<Teacher>) request.getAttribute("list");
 		  
-		  for (Manager m : list) {
+		  for (Teacher t : list) {
 		%>
 		    <tr>
-                <td><%=m.getNo()%></td>
-                <td><a href='detail?no=<%=m.getNo()%>'><%=m.getName()%></a></td>
-                <td><%=m.getEmail()%></td>
-                <td><%=m.getPosition()%></td>
-            </tr>
+                <td><%=t.getNo()%></td>
+                <td><a href='detail?no=<%=t.getNo()%>'><%=t.getName()%></a></td>
+                <td><%=t.getEmail()%></td>
+                <td><%=t.getPay()%></td>
+                <td><%=t.getSubjects()%></td>
 	    <%
 	        }
 		%>

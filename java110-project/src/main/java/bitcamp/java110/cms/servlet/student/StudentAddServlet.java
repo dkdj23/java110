@@ -1,8 +1,8 @@
 package bitcamp.java110.cms.servlet.student;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +17,17 @@ public class StudentAddServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
+    @Override
+    protected void doGet(
+            HttpServletRequest request, 
+            HttpServletResponse response) 
+                    throws ServletException, IOException {
+        response.setContentType("text/html;charSet=UTF-8");
+        RequestDispatcher rd = request.getRequestDispatcher("/student/form.jsp");
+        rd.include(request, response);
+        
+    }
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
