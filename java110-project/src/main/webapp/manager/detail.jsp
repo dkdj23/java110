@@ -21,6 +21,7 @@ table {
 <body>
 <jsp:include page="../header.jsp"/>
 	<h1>매니저 상세정보(MVC)</h1>
+	
         <jsp:useBean id="manager" 
         scope="request"
         class="bitcamp.java110.cms.domain.Manager"/>
