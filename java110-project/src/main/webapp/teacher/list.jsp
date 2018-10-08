@@ -1,8 +1,5 @@
 <%@page import="bitcamp.java110.cms.domain.Teacher"%>
-<%@page import="bitcamp.java110.cms.domain.Student"%>
-<%@ page import="bitcamp.java110.cms.domain.Manager"%>
 <%@ page import="java.util.List"%>
-<%@ page import="bitcamp.java110.cms.dao.ManagerDao"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" 
@@ -43,19 +40,20 @@ table {
 		<tbody>
         <jsp:useBean id="list" 
         scope="request"
-        type="java.util.List<Teacher>"
+        type="java.util.List<bitcamp.java110.cms.domain.Teacher>"
         class="java.util.ArrayList"/>   		
 		<%
 		  //List<Teacher> list = (List<Teacher>) request.getAttribute("list");
 		  
 		  for (Teacher t : list) {
+		      pageContext.setAttribute("t",t);
 		%>
 		    <tr>
-                <td><%=t.getNo()%></td>
-                <td><a href='detail?no=<%=t.getNo()%>'><%=t.getName()%></a></td>
-                <td><%=t.getEmail()%></td>
-                <td><%=t.getPay()%></td>
-                <td><%=t.getSubjects()%></td>
+                <td>${t.no}</td>
+                <td><a href='detail?no=${t.no}'>${t.name}</a></td>
+                <td>${t.email}</td>
+                <td>${t.pay}</td>
+                <td>${t.subjects}</td>
 	    <%
 	        }
 		%>

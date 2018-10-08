@@ -32,7 +32,7 @@ th {
 <%
 //String email = (String)request.getAttribute("email");
 %>
-				<td><input type='email' name='email' value='<%=email%>'></td>
+				<td><input type='email' name='email' value='${cookie.email.value}'></td>
 			</tr>
 			<tr>
 				<th>암호</th>
