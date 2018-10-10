@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import bitcamp.java110.cms.dao.StudentDao;
 import bitcamp.java110.cms.domain.Student;
+import bitcamp.java110.cms.service.StudentService;
 
 @MultipartConfig(maxFileSize=20_000_000)
 @WebServlet("/student/add")
@@ -45,7 +45,8 @@ public class StudentAddServlet extends HttpServlet {
         s.setWorking((request.getParameter("work").equals("Y") ? true : false));
         s.setTel(request.getParameter("tel"));
 
-        StudentDao studentDao = (StudentDao) this.getServletContext().getAttribute("studentDao");
+        StudentService studentService = (StudentService) this.getServletContext()
+                .getAttribute("studentService");
 
         try {
             
@@ -57,7 +58,7 @@ public class StudentAddServlet extends HttpServlet {
                 s.setPhoto(filename);
             }
             
-            studentDao.insert(s);
+            studentService.add(s);
             response.sendRedirect("list");
         } catch (Exception e) {
             request.setAttribute("error", e);

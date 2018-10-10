@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import bitcamp.java110.cms.dao.TeacherDao;
 import bitcamp.java110.cms.domain.Teacher;
+import bitcamp.java110.cms.service.TeacherService;
 
 @MultipartConfig(maxFileSize=20_000_000)
 @WebServlet("/teacher/add")
@@ -47,7 +47,8 @@ public class TeacherAddServlet extends HttpServlet {
         t.setTel(request.getParameter("tel"));
         t.setPay(Integer.parseInt(request.getParameter("pay")));
         t.setSubjects(request.getParameter("subject"));
-        TeacherDao teacherDao = (TeacherDao) this.getServletContext().getAttribute("teacherDao");
+        TeacherService teacherService = (TeacherService) this.getServletContext()
+                .getAttribute("teacherService");
 
         try {
          // 사진 데이터 처리
@@ -58,7 +59,7 @@ public class TeacherAddServlet extends HttpServlet {
                 t.setPhoto(filename);
             }
             
-            teacherDao.insert(t);
+            teacherService.add(t);
             response.sendRedirect("list");
         } catch (Exception e) {
             request.setAttribute("error", e);
