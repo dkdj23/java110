@@ -2,7 +2,7 @@
 <%@page import="bitcamp.java110.cms.domain.Manager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,9 @@ table, th, td {
 
 table {
 	border-collapse: collapse;
+}
+#photo-image{
+    height: 100px;
 }
 </style>
 </head>
@@ -43,6 +46,7 @@ if (student == null){
 				<th>최종학력</th>
 				<th>전화</th>
 				<th>재직여부</th>
+				<th>사진</th>
 			</tr>
 		<tbody>
 			<tr>
@@ -53,6 +57,14 @@ if (student == null){
 				<td><%=student.getSchool()%></td>
 				<td><%=student.getTel()%></td>
 				<td><%=student.isWorking()%></td>
+				<c:choose>
+				    <c:when test="${empty student.photo}">
+				        <td><img id="photo-image" src="/image/anonymous.png"></td>
+				    </c:when>
+				    <c:otherwise>
+				        <td><img id="photo-image" src="/upload/${student.photo}"></td>
+				    </c:otherwise>
+				</c:choose>
 			</tr>
 		</tbody>
 	</table>

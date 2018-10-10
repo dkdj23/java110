@@ -15,7 +15,7 @@ th {
 <body>
     <h1>매니저 등록(MVC)</h1>
     <jsp:include page="../header.jsp"/>
-    <form action='add' method='post'>
+    <form action='add' method='post' enctype="multipart/form-data">
         <table>
             <tbody>
                 <tr>
@@ -37,6 +37,10 @@ th {
                 <tr>
                     <th>직위</th>
                     <td><input type='text' name='position'></td>
+                </tr>
+                <tr>
+                    <th>사진</th>
+                    <td><input type='file' name='file1'></td>
                 </tr>
                 <tr>
                     <th></th>

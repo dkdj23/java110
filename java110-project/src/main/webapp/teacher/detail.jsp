@@ -3,7 +3,7 @@
 <%@page import="bitcamp.java110.cms.domain.Manager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +18,14 @@ table, th, td {
 table {
 	border-collapse: collapse;
 }
+#photo-image{
+    height: 100px;
+}
 </style>
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
 	<h1>강사 상세정보(MVC)</h1>
-<jsp:include page="../header.jsp"/>
-    <h1>학생 상세정보(MVC)</h1>
     <jsp:useBean id="teacher" 
     scope="request"
     class="bitcamp.java110.cms.domain.Teacher"/>    	
@@ -46,6 +47,7 @@ if (teacher == null){
 				<th>전화</th>
 				<th>시급</th>
 				<th>강의과목</th>
+				<th>사진</th>
 			</tr>
 		<tbody>
 			<tr>
@@ -56,6 +58,14 @@ if (teacher == null){
 				<td><%=teacher.getTel()%></td>
 				<td><%=teacher.getPay()%></td>
 				<td><%=teacher.getSubjects()%></td>
+				<c:choose>
+                    <c:when test="${empty teacher.photo}">
+                        <td><img id="photo-image" src="/image/anonymous.png"></td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><img id="photo-image" src="/upload/${teacher.photo}"></td>
+                    </c:otherwise>
+                </c:choose>
 			</tr>
 		</tbody>
 	</table>

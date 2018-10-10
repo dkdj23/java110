@@ -10,6 +10,8 @@ public class Member implements Serializable {
     protected String email;
     protected String password;
     protected String tel;
+    protected String photo;
+    
     
     public String getTel() {
         return tel;
@@ -41,4 +43,11 @@ public class Member implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getPhoto() {
+        return photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+    
 }

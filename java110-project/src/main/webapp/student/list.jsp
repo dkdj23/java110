@@ -17,6 +17,7 @@ table, th, td {
 table {
 	border-collapse: collapse;
 }
+
 </style>
 </head>
 <body>

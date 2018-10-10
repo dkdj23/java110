@@ -1,7 +1,7 @@
 <%@page import="bitcamp.java110.cms.domain.Manager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +16,13 @@ table, th, td {
 table {
 	border-collapse: collapse;
 }
+#photo-image{
+    height: 100px;
+}
 </style>
 </head>
 <body>
+<jsp:include page="../header.jsp"/>
 	<table>
 		<thead>
 			<tr>
@@ -28,6 +32,7 @@ table {
 				<th>암호</th>
 				<th>전화</th>
 				<th>직위</th>
+				<th>사진</th>
 			</tr>
 		<tbody>
 			<tr>
@@ -37,6 +42,18 @@ table {
 				<td>${manager.password}</td>
 				<td>${manager.tel}</td>
 				<td>${manager.position}</td>
+				<c:choose>
+				    <c:when test="${not empty manager.photo}">
+						<td>
+						    <img id='photo-image' src='/upload/${manager.photo}'>
+						</td>
+				    </c:when>
+				    <c:otherwise>
+						<td>
+						    <img id='photo-image' src='/image/anonymous.png'>
+						</td>
+				    </c:otherwise>
+				</c:choose>
 			</tr>
 		</tbody>
 	</table>
