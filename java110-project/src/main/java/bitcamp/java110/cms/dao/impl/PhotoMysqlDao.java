@@ -1,7 +1,7 @@
 package bitcamp.java110.cms.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 import bitcamp.java110.cms.dao.DaoException;
 import bitcamp.java110.cms.dao.PhotoDao;
@@ -17,20 +17,21 @@ public class PhotoMysqlDao implements PhotoDao {
 
     @Override
     public int insert(int no, String filename) throws DaoException {
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         
         Connection con = null;
         
         try {
             con = dataSource.getConnection();
-            stmt = con.createStatement();
             
             String sql = "insert into p1_memb_phot(mno,photo) "
-                    + " values(" + no
-                    + ", '" + filename
-                    + "')";
+                    + " values(?,?)";
             
-            return stmt.executeUpdate(sql);
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, no);
+            stmt.setString(2, filename);
+            
+            return stmt.executeUpdate();
             
         } catch (Exception e) {
             throw new DaoException(e);
@@ -44,15 +45,16 @@ public class PhotoMysqlDao implements PhotoDao {
     @Override
     public int delete(int no) throws DaoException  {
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         
         try {
             con = dataSource.getConnection();
             
-            stmt = con.createStatement();
             
-            String sql = " delete from p1_memb_phot where mno=" + no;
-            return stmt.executeUpdate(sql);
+            String sql = " delete from p1_memb_phot where mno=? ";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, no);
+            return stmt.executeUpdate();
             
         } catch (Exception e) {
             throw new DaoException(e);
