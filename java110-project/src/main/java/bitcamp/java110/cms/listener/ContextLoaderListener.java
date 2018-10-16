@@ -1,8 +1,14 @@
 package bitcamp.java110.cms.listener;
 
+import java.io.InputStream;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import bitcamp.java110.cms.dao.impl.ManagerMysqlDao;
 import bitcamp.java110.cms.dao.impl.MemberMysqlDao;
@@ -14,7 +20,6 @@ import bitcamp.java110.cms.service.impl.ManagerServiceImpl;
 import bitcamp.java110.cms.service.impl.StudentServiceImpl;
 import bitcamp.java110.cms.service.impl.TeacherServiceImpl;
 import bitcamp.java110.cms.util.DataSource;
-import bitcamp.java110.cms.util.TransactionManager;
 
 //@WebListener
 public class ContextLoaderListener implements ServletContextListener {
@@ -25,31 +30,28 @@ public class ContextLoaderListener implements ServletContextListener {
         ServletContext sc = sce.getServletContext();
         
         try {
-            // DAO가 사용할 DB 커넥션풀 객체 준비
-            DataSource dataSource = new DataSource(
-                    sc.getInitParameter("jdbc.driver"),
-                    sc.getInitParameter("jdbc.url"),
-                    sc.getInitParameter("jdbc.username"),
-                    sc.getInitParameter("jdbc.password"));
+            String resource = "bitcamp/java110/cms/conf/mybatis-config.xml";
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            SqlSessionFactory sqlSessionFactory =
+              new SqlSessionFactoryBuilder().build(inputStream);
             
-            TransactionManager txManager = TransactionManager.getInstance();
-            txManager.setDataSource(dataSource);
             
             // DAO 객체 생성 및 DB 커넥션풀 주입하기
             MemberMysqlDao memberDao = new MemberMysqlDao();
-            memberDao.setDataSource(dataSource);
-            
-            ManagerMysqlDao managerDao = new ManagerMysqlDao();
-            managerDao.setDataSource(dataSource);
-            
-            StudentMysqlDao studentDao = new StudentMysqlDao();
-            studentDao.setDataSource(dataSource);
-            
-            TeacherMysqlDao teacherDao = new TeacherMysqlDao();
-            teacherDao.setDataSource(dataSource);
+            memberDao.setSqlSessionFactory(sqlSessionFactory);
             
             PhotoMysqlDao photoDao = new PhotoMysqlDao();
-            photoDao.setDataSource(dataSource);
+            photoDao.setSqlSessionFactory(sqlSessionFactory);
+            
+            ManagerMysqlDao managerDao = new ManagerMysqlDao();
+            managerDao.setSqlSessionFactory(sqlSessionFactory);
+            
+            StudentMysqlDao studentDao = new StudentMysqlDao();
+            studentDao.setSqlSessionFactory(sqlSessionFactory);
+            
+            TeacherMysqlDao teacherDao = new TeacherMysqlDao();
+            teacherDao.setSqlSessionFactory(sqlSessionFactory);
+            
             
             // 서비스 객체 준비하기
             ManagerServiceImpl managerService = new ManagerServiceImpl();

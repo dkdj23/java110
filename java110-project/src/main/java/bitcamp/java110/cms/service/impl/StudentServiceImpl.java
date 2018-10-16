@@ -1,14 +1,13 @@
 package bitcamp.java110.cms.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import bitcamp.java110.cms.dao.MemberDao;
 import bitcamp.java110.cms.dao.PhotoDao;
 import bitcamp.java110.cms.dao.StudentDao;
-import bitcamp.java110.cms.domain.Manager;
 import bitcamp.java110.cms.domain.Student;
 import bitcamp.java110.cms.service.StudentService;
-import bitcamp.java110.cms.util.TransactionManager;
 
 public class StudentServiceImpl implements StudentService {
 
@@ -32,28 +31,24 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void add(Student student) {
-        TransactionManager txManager = TransactionManager.getInstance();
-        // 매니저 등록과 관련된 업무는 ManagerService 객체에서 처리한다.
-        try {
-            txManager.startTransaction();
-            memberDao.insert(student);
-            studentDao.insert(student);
-            
-            if(student.getPhoto() != null) {
-                photoDao.insert(student.getNo(), student.getPhoto());
-            }
-            txManager.commit();
-        } catch (Exception e) {
-            try {
-                txManager.rollback();
-            } catch (Exception e1) {}
-            throw new RuntimeException(e);
+        memberDao.insert(student);
+        studentDao.insert(student);
+
+        if (student.getPhoto() != null) {
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("no", student.getNo());
+            params.put("photo", student.getPhoto());
+            photoDao.insert(params);
         }
     }
     
     @Override
-    public List<Student> list() {
-        return studentDao.findAll();
+    public List<Student> list(int pageNo, int pageSize) {
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("rowNo", (pageNo-1) * pageSize);
+        params.put("size",pageSize);
+        
+        return studentDao.findAll(params);
     }
 
     @Override
@@ -63,21 +58,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void delete(int no) {
-        TransactionManager txManager = TransactionManager.getInstance();
-        try {
-            txManager.startTransaction();
-            if (studentDao.delete(no) == 0) {
-                throw new RuntimeException("해당 번호의 데이터가 없습니다.");
-            }
-            photoDao.delete(no);
-            memberDao.delete(no);
-            txManager.commit();
-        } catch (Exception e) {
-            try {
-                txManager.rollback();
-            } catch (Exception e1) {}
-            throw new RuntimeException(e);
+        if (studentDao.delete(no) == 0) {
+            throw new RuntimeException("해당 번호의 데이터가 없습니다.");
         }
+        photoDao.delete(no);
+        memberDao.delete(no);
     }
 
 }

@@ -7,30 +7,60 @@
   <!-- return sqlSession.insert("memberdao<<< namespace.insert",member); -->
 <mapper namespace="memberdao">
 
+  <!-- 컬럼명과 자바 객체의 프로퍼티명이 다를 경우,
+       컬럼명에 대해 프로퍼티 이름과 같게 별명을 지정해야만
+       제대로 DB 컬럼 값이 객체에 저장된다.
+   그러나 매번 SELECT 를 씰헁할 때 마다 컬럼에 대해 별명을 지"src/test/java/ex03/mybatis-config.xml"정하는 것은
+   매우 불편하고 번거로운 일이다.
+   이를 해결하기 위해 다음 태그를 사용한다.
+   즉 컬럼과 프로퍼티를 맺어주는 선언이다. 
+   
+  resultMap 은 sele"src/test/java/ex03/mybatis-config.xml"ct 하고만 상관 있다.
+   -->
+   <resultMap type="member" id="memberMap">
+    <id column="mno" property="no" />  <!-- PK 인 경우는 태그명을 id 로 해야함!! -->
+    <result column="name" property="name" />
+    <result column="email" property="email" />
+    <result column="tel" property="tel" />
+   </resultMap>
+
+
+  <!-- 여러 곳에서 공통으로 사용하는 SQL 문이 있다면
+       다음과 같이 별도로 정의해 놓고 필요한 곳에서 삽입한다. 
+  -->
+  
+  <sql id="select1">
+       select 
+       m.mno as no,
+       m.name, 
+       m.email, 
+       m.tel 
+  </sql>
+
+
   <!-- SQL을 작성할 SQL의 id는 가능한 DAO의 메서드명과 같게 하라!
        나중에 유지보수할 때 찾기 쉽다. 
   -->
-  <select id="findAll" resultType="ex03.Member">
+  <!-- <select id="findAll" resultType="ex03.Member"> -->
+  <!-- <select id="findAll" resultType="member"> mybatis-config.xml 에서 alias 해줘서 member 사용가능 .. member : ex03.Member-->
+  <select id="findAll" resultMap="memberMap">
    select 
-       m.mno as no,
+       <!-- m.mno as no,  column 이름과 동일한 property 에 값이 집어넣는데 setMno() 가 없고 setNo 가 있으니  as no 로 변경해줌 -->
+       m.mno,
        m.name, 
        m.email, 
        m.tel 
    from p1_memb m 
   </select>
   <select id="findByNo" resultType="ex03.Member" parameterType="int">
-   select 
-       m.mno as no,
-       m.name, 
-       m.email, 
-       m.tel 
+  <include refid="select1"></include>
    from p1_memb m
    where mno=#{value}
   </select>
   <insert id="insert" parameterType="ex03.Member"
-          useGeneratedKeys="true" keyColumn="mno" keyProperty="no">
+          useGeneratedKeys="true" keyColumn="mno" keyProperty="no"> <!-- keyProperty -> Member객체의 setNo -->
    insert into p1_memb(name,email,pwd,tel,cdt)
-   values(#{name},#{email},password(#{password}),#{tel},now())
+   values(#{name},#{email},password(#{password}),#{tel},now()) <!-- property는 getter setter를 나타냄 -->
   </insert>
   <delete id="delete" parameterType="int">
    delete from p1_memb where mno=#{no}

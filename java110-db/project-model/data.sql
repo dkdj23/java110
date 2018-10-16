@@ -19,3 +19,38 @@ insert into p1_memb(mno,name,email,pwd,cdt)
 values(9, 'user09', 'user09@test.com', password('1111'),now());
 insert into p1_memb(mno,name,email,pwd,cdt)
 values(10, 'user10', 'user10@test.com', password('1111'),now());
+
+
+-- 게시물
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목1','내용1',0,now(),1);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목2','내용2',0,now(),1);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목3','내용3',0,now(),1);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목4','내용4',0,now(),2);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목5','내용5',0,now(),2);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목6','내용6',0,now(),4);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목7','내용7',0,now(),4);
+
+insert into p1_board(titl,cont,cnt,cdt,mno)
+values ('제목8','내용8',0,now(),4);
+
+-- 게시물 첨부 파일
+insert into p1_att_file(fi_nm, bno) values('file1.txt',1);
+insert into p1_att_file(fi_nm, bno) values('file2.txt',1);
+insert into p1_att_file(fi_nm, bno) values('file3.txt',2);
+insert into p1_att_file(fi_nm, bno) values('file4.txt',3);
+insert into p1_att_file(fi_nm, bno) values('file5.txt',3);
+insert into p1_att_file(fi_nm, bno) values('file6.txt',5);
+insert into p1_att_file(fi_nm, bno) values('file7.txt',8);

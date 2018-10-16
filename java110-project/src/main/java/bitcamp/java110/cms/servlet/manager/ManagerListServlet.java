@@ -24,9 +24,24 @@ public class ManagerListServlet extends HttpServlet {
             HttpServletResponse response) 
                     throws ServletException, IOException {
 
+        int pageNo = 1;
+        int pageSize = 3;
+        
+        if (request.getParameter("pageNo") != null) {
+            pageNo = Integer.parseInt(request.getParameter("pageNo"));
+            if (pageNo < 1)
+                pageNo = 1;
+        }
+        
+        if (request.getParameter("pageSize") != null) {
+            pageSize = Integer.parseInt(request.getParameter("pageSize"));
+            if (pageSize < 3 || pageSize > 10)
+                pageSize = 3;
+        }
+        
         // JSP가 사용할 데이터 준비
         ManagerService managerService = (ManagerService) this.getServletContext().getAttribute("managerService");
-        List<Manager> list = managerService.list();
+        List<Manager> list = managerService.list(pageNo,pageSize);
         
         // JSP 사용할 수 있도록 ServletRequeset 보관소에 저장한다.
         request.setAttribute("list", list);
