@@ -55,24 +55,16 @@ public class ContextLoaderListener implements ServletContextListener {
             
             // 서비스 객체 준비하기
             ManagerServiceImpl managerService = new ManagerServiceImpl();
-            managerService.setMemberDao(memberDao);
-            managerService.setManagerDao(managerDao);
-            managerService.setPhotoDao(photoDao);
+            managerService.setSqlSessionFactory(sqlSessionFactory);
             
             StudentServiceImpl studentService = new StudentServiceImpl();
-            studentService.setMemberDao(memberDao);
-            studentService.setStudentDao(studentDao);
-            studentService.setPhotoDao(photoDao);
+            studentService.setSqlSessionFactory(sqlSessionFactory);
             
             TeacherServiceImpl teacherService = new TeacherServiceImpl();
-            teacherService.setMemberDao(memberDao);
-            teacherService.setTeacherDao(teacherDao);
-            teacherService.setPhotoDao(photoDao);
+            teacherService.setSqlSessionFactory(sqlSessionFactory);
             
             AuthServiceImpl authService = new AuthServiceImpl();
-            authService.setManagerDao(managerDao);
-            authService.setTeacherDao(teacherDao);
-            authService.setStudentDao(studentDao);
+            authService.setSqlSessionFactory(sqlSessionFactory);
             
             
             // 서블릿에서 DAO를 이용할 수 있도록 ServletContext 보관소에 저장하기

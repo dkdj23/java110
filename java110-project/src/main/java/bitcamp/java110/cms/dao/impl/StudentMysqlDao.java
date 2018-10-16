@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import bitcamp.java110.cms.dao.DaoException;
 import bitcamp.java110.cms.dao.StudentDao;
 import bitcamp.java110.cms.domain.Student;
 
@@ -19,7 +18,7 @@ public class StudentMysqlDao implements StudentDao {
     }
 
     @Override
-    public int insert(Student student) throws DaoException  {
+    public int insert(Student student) {
         try(SqlSession session = sqlSessionFactory.openSession(true)){
             return session.insert(
                     "bitcamp.java110.cms.dao.StudentDao.insert", student);
