@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="c1" class="ex05.Car">
+        <property name="model"><value>쏘나타</value></property>
+        <property name="cc"    value="1980"/>
+        <property name="maker" value="현다이자동차"/>
+    </bean>
+    
+    <bean id="e1" class="ex05.Engine">
+        <property name="maker" value="비트자동차"/>
+        <property name="valve" value="18"/>
+        <property name="diesel" value="true"/>
+    </bean>
+    
+    <bean id="c3" class="ex05.Car">
+        <property name="model"><value>트럭1</value></property>
+        <property name="cc"    value="10000"/>
+        <property name="maker" value="현다이자동차"/>
+        <property name="engine"><ref bean="e1"/></property>
+    </bean>
+       
+    <bean id="c4" class="ex05.Car">
+        <property name="model"><value>트럭2</value></property>
+        <property name="cc"    value="10000"/>
+        <property name="maker" value="현다이자동차"/>
+        <property name="engine" ref="e1"/>
+    </bean>
+       
+    <!-- wkqkzhem:
+     Car obj = new Car();
+     obj.setMode("트럭3");
+     obj.setCc(10000);
+     Engine engine = new Engine();
+     engine.setMaker("캠프자동차");
+     obj.setEngine(engine);
+             컨테이너.보관("c5",obj);
+     -->   
+    <bean id="c5" class="ex05.Car">
+        <property name="model"><value>트럭3</value></property>
+        <property name="cc"    value="10000"/>
+        <property name="maker" value="현다이자동차"/>
+        <property name="engine">
+            <bean class="ex05.Engine">
+		        <property name="maker" value="캠프자동차"/>
+		        <property name="valve" value="18"/>
+		        <property name="diesel" value="true"/>
+            </bean>
+        </property>
+    </bean>
+</beans>

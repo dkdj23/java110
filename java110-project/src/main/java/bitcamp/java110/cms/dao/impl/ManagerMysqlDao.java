@@ -28,7 +28,6 @@ public class ManagerMysqlDao implements ManagerDao {
     
     @Override
     public List<Manager> findAll(Map<String,Object> params) {
-        
         try(SqlSession sqlSession = sqlSessionFactory.openSession()){
             return sqlSession.selectList(
                     "bitcamp.java110.cms.dao.ManagerDao.findAll", params);

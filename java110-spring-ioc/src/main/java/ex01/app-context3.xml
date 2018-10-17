@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- IoC컨테이너.put("factory", new CarFactory2()); -->
+    <bean id="factory" class="ex01.CarFactory2"/>
+
+    <!--  IoC컨테이너.put("c1", CarFactory1.create("소나타")); -->
+    <bean id="c1" factory-method="create" factory-bean="factory">   
+        <!-- collaborators and configuration for this bean go here -->
+        <constructor-arg value="그랜저"/>
+    </bean>
+
+</beans>

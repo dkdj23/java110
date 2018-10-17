@@ -10,16 +10,10 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import bitcamp.java110.cms.dao.impl.ManagerMysqlDao;
-import bitcamp.java110.cms.dao.impl.MemberMysqlDao;
-import bitcamp.java110.cms.dao.impl.PhotoMysqlDao;
-import bitcamp.java110.cms.dao.impl.StudentMysqlDao;
-import bitcamp.java110.cms.dao.impl.TeacherMysqlDao;
 import bitcamp.java110.cms.service.impl.AuthServiceImpl;
 import bitcamp.java110.cms.service.impl.ManagerServiceImpl;
 import bitcamp.java110.cms.service.impl.StudentServiceImpl;
 import bitcamp.java110.cms.service.impl.TeacherServiceImpl;
-import bitcamp.java110.cms.util.DataSource;
 
 //@WebListener
 public class ContextLoaderListener implements ServletContextListener {
@@ -37,6 +31,8 @@ public class ContextLoaderListener implements ServletContextListener {
             
             
             // DAO 객체 생성 및 DB 커넥션풀 주입하기
+            
+            /*
             MemberMysqlDao memberDao = new MemberMysqlDao();
             memberDao.setSqlSessionFactory(sqlSessionFactory);
             
@@ -51,6 +47,7 @@ public class ContextLoaderListener implements ServletContextListener {
             
             TeacherMysqlDao teacherDao = new TeacherMysqlDao();
             teacherDao.setSqlSessionFactory(sqlSessionFactory);
+            */
             
             
             // 서비스 객체 준비하기

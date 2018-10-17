@@ -1,0 +1,17 @@
+
+plugins {
+    id 'java'
+    id 'eclipse'
+}
+
+
+dependencies {
+    
+    compile group: 'org.springframework', name: 'spring-context', version: '5.1.1.RELEASE'
+    compile 'com.google.guava:guava:23.0'
+    testCompile 'junit:junit:4.12'
+}
+
+repositories {
+    mavenCentral()
+}

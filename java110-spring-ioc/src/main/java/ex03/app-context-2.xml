@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- IoC컨테이너.put("c1", new Car()); -->
+    <bean id="c1" class="ex03.Car">   
+        <!-- collaborators and configuration for this bean go here -->
+    </bean>
+    <bean id="c4" name="n1;n2;n3;n4" class="ex03.Car">   
+        <!-- collaborators and configuration for this bean go here -->
+    </bean>
+    <bean name="k1 k2 k3" class="ex03.Car">   
+        <!-- collaborators and configuration for this bean go here -->
+    </bean>
+    
+    
+    <!--  아래 두개는 똑같다. name만 있으면 가장 앞 name 이 id가 되므로 -->
+    <bean name="c5" class="ex03.Car"/>
+    <bean id="c6" class="ex03.Car"/>
+    
+    
+    <!-- id나 alias 를 지정하지 않으면, 클래스명이 이름으로 사용된다. 
+         id => "ex03.Car#0"
+         alias => "ex03.Car"
+         -->
+    <bean class="ex03.Car"/>
+    
+    <!-- 같은 타입의 두 번째 익명 객체부터는 
+         id => "ex03.Car#1"
+         alias => "없다"
+         -->
+    <bean class="ex03.Car"/>
+
+</beans>
