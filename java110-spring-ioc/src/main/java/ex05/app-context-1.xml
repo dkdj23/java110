@@ -30,7 +30,7 @@
         <property name="engine" ref="e1"/>
     </bean>
        
-    <!-- wkqkzhem:
+    <!-- 자바코드:
      Car obj = new Car();
      obj.setMode("트럭3");
      obj.setCc(10000);

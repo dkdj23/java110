@@ -1,4 +1,4 @@
-package ex05;
+package ex08;
 
 public class Engine {
     private String maker;
@@ -25,7 +25,6 @@ public class Engine {
         return valve;
     }
     public void setValve(int valve) {
-        System.out.println("Engine.setValve()");
         this.valve = valve;
     }
     public boolean isDiesel() {
