@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+
 import bitcamp.java110.cms.domain.Manager;
 import bitcamp.java110.cms.service.ManagerService;
 
@@ -25,7 +27,11 @@ public class ManagerDetailServlet extends HttpServlet {
         // JSP 페이지에서 사용할 데이터를 준비한다.
         int no = Integer.parseInt(request.getParameter("no"));
         
-        ManagerService managerService = (ManagerService) this.getServletContext().getAttribute("managerService");
+        ApplicationContext iocContainer = 
+                (ApplicationContext) this.getServletContext()
+                .getAttribute("iocContainer");
+        
+        ManagerService managerService = iocContainer.getBean(ManagerService.class);
         Manager m = managerService.get(no);
         
         // JSP 페이지에서 사용할 수 있도록 ServletRequest 보관소에 저장한다.

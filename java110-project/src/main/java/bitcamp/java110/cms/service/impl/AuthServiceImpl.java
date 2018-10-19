@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import bitcamp.java110.cms.dao.ManagerDao;
 import bitcamp.java110.cms.dao.StudentDao;
@@ -11,14 +13,12 @@ import bitcamp.java110.cms.dao.TeacherDao;
 import bitcamp.java110.cms.domain.Member;
 import bitcamp.java110.cms.service.AuthService;
 
+@Service
 public class AuthServiceImpl implements AuthService {
 
+    @Autowired
     SqlSessionFactory sqlSessionFactory;
     
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        this.sqlSessionFactory = sqlSessionFactory;
-    }
-
     @Override
     public Member getMember(String email, String password, String memberType) {
         // 같은 dao 객체를 리턴하지만 커넥션 교체는 한다.
