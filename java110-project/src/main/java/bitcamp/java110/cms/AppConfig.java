@@ -1,11 +1,8 @@
 package bitcamp.java110.cms;
 
-import java.util.Properties;
-import java.util.Set;
-
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,7 +20,7 @@ import bitcamp.java110.cms.service.ManagerService;
 //<properties resource="bitcamp/java110/cms/conf/jdbc.properties"></properties>
 @PropertySource("classpath:/bitcamp/java110/cms/conf/jdbc.properties")
 // Mybatis에서 자동으로 DAO를 생성할 떄 사용할 인터페이스가 들어 있는 패키지 설정 >> <mapper namespace="bitcamp.java110.cms.dao.ManagerDao">  
-@MapperScan("bitcamp.java110.cms.mapper")
+@MapperScan("bitcamp.java110.cms.dao")
 public class AppConfig {
     
     @Autowired
@@ -70,7 +67,7 @@ public class AppConfig {
             throw new RuntimeException();
         }
     }
-    /*
+    
     public static void main(String[] args) {
         // Java Config를 사용할 때는 다음 IoC 컨테이너를 사용한다.
         ApplicationContext iocContainer =
@@ -95,8 +92,8 @@ public class AppConfig {
         System.out.println(s.list(1, 5));
         
         
-        Properties props = System.getProperties();
-        Set<Entry> props.
+//        Properties props = System.getProperties();
+//        Set<Entry> props.
     }
-    */
+    
 }
