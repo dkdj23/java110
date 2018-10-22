@@ -1,39 +1,32 @@
-package bitcamp.java110.cms.servlet.auth;
+package bitcamp.java110.cms.web.auth;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Member;
 import bitcamp.java110.cms.service.AuthService;
+import bitcamp.java110.cms.web.PageController;
 
-@WebServlet("/auth/login")
-public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+@Component("/auth/login")
+public class LoginController implements PageController {
 
-    @Override
-    protected void doGet(
-            HttpServletRequest request, 
-            HttpServletResponse response
-            ) throws ServletException, IOException {
-       
-        request.setAttribute("viewUrl", "/auth/login.jsp");
-    }
+    @Autowired
+    AuthService authService;
     
     @Override
-    protected void doPost(
+    public String service(
             HttpServletRequest request, 
-            HttpServletResponse response
-            ) throws ServletException, IOException {
+            HttpServletResponse response) throws Exception {
+       
+        if(request.getMethod().equals("GET")) {
+            return "/auth/login.jsp";
+        }
+        
         request.setCharacterEncoding("UTF-8");
         
         String type = request.getParameter("type");
@@ -41,26 +34,17 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String save = request.getParameter("save");
         
-        ArrayList<Cookie> cookies = new ArrayList<>();
         // 이메일 저장하기를 체크했다면
         if (save != null) {
             Cookie cookie = new Cookie("email",email);
             cookie.setMaxAge(60*60*24*15);
-            cookies.add(cookie);
-            
-//            response.addCookie(cookie);
+            response.addCookie(cookie);
         } else {
             Cookie cookie = new Cookie("email","");
             cookie.setMaxAge(0);
-//            response.addCookie(cookie);
-            cookies.add(cookie);
+            response.addCookie(cookie);
         }
         
-        ApplicationContext iocContainer = 
-                    (ApplicationContext) this.getServletContext()
-                    .getAttribute("iocContainer");
-        
-        AuthService authService = iocContainer.getBean(AuthService.class);
         
         Member loginUser = authService.getMember(email, password, type);
         
@@ -86,15 +70,13 @@ public class LoginServlet extends HttpServlet {
                 break;
             }
             
-            request.setAttribute("viewUrl", "redirect:" + redirectUrl);
+            return "redirect:" + redirectUrl;
         } else {
             // 로그인 된 상태에서 다른 사용자로 로그인을 시도하다가
             // 실패한다면 무조건 세션을 무효화시킨다.
             session.invalidate();
             
-            request.setAttribute("viewUrl", "redirect:login");
+            return "redirect:login";
         }
-        
-        request.setAttribute("cookies",cookies);
     }
 }

@@ -1,30 +1,26 @@
-package bitcamp.java110.cms.servlet.student;
+package bitcamp.java110.cms.web;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Student;
 import bitcamp.java110.cms.service.StudentService;
 
-@WebServlet("/student/list")
-public class StudentListServlet extends HttpServlet {
+@Component("/student/list")
+public class StudentListController implements PageController {
     
-    private static final long serialVersionUID = 1L;
+    @Autowired
+    StudentService studentService;
 
     @Override
-    public void doGet(
+    public String service(
             HttpServletRequest request, 
-            HttpServletResponse response) 
-                    throws ServletException, IOException {
+            HttpServletResponse response) throws Exception {
         int pageNo = 1;
         int pageSize = 3;
         
@@ -39,14 +35,9 @@ public class StudentListServlet extends HttpServlet {
             if (pageSize < 3 || pageSize > 10)
                 pageSize = 3;
         }
-        ApplicationContext iocContainer 
-                    = (ApplicationContext)this.getServletContext()
-                    .getAttribute("iocContainer");
-
-        StudentService studentService = iocContainer.getBean(StudentService.class);
         
         List<Student> list = studentService.list(pageNo,pageSize);
         request.setAttribute("list", list);
-        request.setAttribute("viewUrl", "/student/list.jsp");
+        return "/student/list.jsp";
     }
 }

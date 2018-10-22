@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+
+import bitcamp.java110.cms.web.PageController;
+
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -22,31 +26,34 @@ public class DispatcherServlet extends HttpServlet {
         //System.out.println(request.getServletPath()); // /app
         String pageControllerPath = request.getPathInfo(); // /manager/list
         
-        // 페이지 컨트롤러 실행
-        RequestDispatcher rd = request.getRequestDispatcher(pageControllerPath);
-        rd.include(request, response);
+        // 스프링 IoC 컨테이너 가져오기
+        ApplicationContext iocContainer = 
+                (ApplicationContext) this.getServletContext()
+                .getAttribute("iocContainer");
         
-        // 페이지 컨트롤러가 담아놓은 쿠키 처리하기
-        @SuppressWarnings("unchecked")
-        List<Cookie> cookies = (List<Cookie>) request.getAttribute("cookies");
-        if(cookies != null) {
-            for(Cookie c : cookies) {
-                response.addCookie(c);
+        // IoC 컨테이너에서 페이지 컨트롤러를 찾는다.
+        try { // 못찾으면 예외 발생하므로 예외처리함
+            PageController controller = (PageController) iocContainer
+                    .getBean(pageControllerPath);
+            
+            // pageController 실행
+            String viewUrl = controller.service(request, response);
+            
+            if(viewUrl.startsWith("redirect:")) {
+                response.sendRedirect(viewUrl.substring(9));
+            } else {
+                // 페이지 컨트롤러가 지정한 URL을 실행
+                response.setContentType("text/html;charSet=UTF-8");
+                RequestDispatcher rd = request.getRequestDispatcher(viewUrl);
+                rd.include(request, response);
             }
-        }
-        
-        // 페이지 컨트롤러의 리턴 값을 처리
-        String viewUrl = (String) request.getAttribute("viewUrl");
-        
-        if(viewUrl.startsWith("redirect:")) {
-            response.sendRedirect(viewUrl.substring(9));
-        } else {
-            // 페이지 컨트롤러가 지정한 URL을 실행
+        } catch (Exception e) {
+            request.setAttribute("error", e);
+            request.setAttribute("message", "실행 오류");
+            
             response.setContentType("text/html;charSet=UTF-8");
-            rd = request.getRequestDispatcher(viewUrl);
+            RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
             rd.include(request, response);
         }
-        
-        
     }
 }
