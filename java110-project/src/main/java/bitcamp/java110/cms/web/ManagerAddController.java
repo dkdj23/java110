@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Manager;
+import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.ManagerService;
 
-@Component("/manager/add")
-public class ManagerAddController implements PageController  { 
+@Component
+public class ManagerAddController { 
 
     @Autowired
     ManagerService managerService;
     
-    @Override
-    public String service(
+    @RequestMapping("/manager/add")
+    public String ㅁㅇㅇ(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception { 
         

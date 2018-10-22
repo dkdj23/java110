@@ -2,7 +2,6 @@ package bitcamp.java110.cms.web;
 
 import java.util.UUID;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -11,17 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Teacher;
+import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.TeacherService;
 
-@MultipartConfig(maxFileSize=20_000_000)
-@Component("/teacher/add")
-public class TeacherAddController implements PageController {
+@Component
+public class TeacherAddController {
 
     @Autowired
     TeacherService teacherService;
     
-    @Override
-    public String service(
+    @RequestMapping("/teacher/add")
+    public String add(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
         

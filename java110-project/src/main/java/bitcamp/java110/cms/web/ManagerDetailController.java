@@ -10,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Manager;
+import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.ManagerService;
 
-@Component("/manager/detail")
-public class ManagerDetailController implements PageController { 
+@Component
+public class ManagerDetailController { 
 
     @Autowired
     ManagerService managerService;
     
-    @Override
-    public String service(
+    @RequestMapping("/manager/detail")
+    public String detail(
             HttpServletRequest request, 
             HttpServletResponse response) 
                     throws ServletException, IOException {

@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Student;
+import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.StudentService;
 
-@Component("/student/list")
-public class StudentListController implements PageController {
+@Component
+public class StudentListController {
     
     @Autowired
     StudentService studentService;
 
-    @Override
-    public String service(
+    @RequestMapping("/student/list")
+    public String list(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
         int pageNo = 1;

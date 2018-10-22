@@ -10,16 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bitcamp.java110.cms.domain.Student;
+import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.StudentService;
 
-@Component("/student/add")
-public class StudentAddController implements PageController {
+@Component
+public class StudentAddController {
 
     @Autowired
     StudentService studentService;
 
-    @Override
-    public String service(
+    @RequestMapping("/student/add")
+    public String add(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
         if(request.getMethod().equals("GET")) {

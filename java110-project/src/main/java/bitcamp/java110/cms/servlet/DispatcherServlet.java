@@ -1,18 +1,17 @@
 package bitcamp.java110.cms.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 
-import bitcamp.java110.cms.web.PageController;
+import bitcamp.java110.cms.mvc.RequestMappingHandlerMapping;
+import bitcamp.java110.cms.mvc.RequestMappingHandlerMapping.Handler;
 
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -33,12 +32,23 @@ public class DispatcherServlet extends HttpServlet {
         
         // IoC 컨테이너에서 페이지 컨트롤러를 찾는다.
         try { // 못찾으면 예외 발생하므로 예외처리함
-            PageController controller = (PageController) iocContainer
-                    .getBean(pageControllerPath);
             
-            // pageController 실행
-            String viewUrl = controller.service(request, response);
+            // IoC 컨테이너에서 요청 URL을 처리할 메서드를 찾아야 한다.
+            // 1) 메서드 정보가 보관된 객체를 얻는다.
+            RequestMappingHandlerMapping handlerMapping = 
+                    (RequestMappingHandlerMapping) iocContainer.getBean(
+                            RequestMappingHandlerMapping.class);
+
+            // 2) HandlerMapping에서 url을 처리할 메서드 정보를 얻는다.
+            Handler handler = handlerMapping.getHandler(pageControllerPath);
             
+            if(handler == null)
+                throw new Exception("요청을 처리할 수 없습니다");
+            
+            // 3) URL을 처리할 메서드를 호출한다.
+            String viewUrl = (String) handler.method.invoke(
+                    handler.instance, request, response);
+                                    
             if(viewUrl.startsWith("redirect:")) {
                 response.sendRedirect(viewUrl.substring(9));
             } else {
