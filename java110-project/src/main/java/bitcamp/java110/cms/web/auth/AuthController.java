@@ -13,7 +13,7 @@ import bitcamp.java110.cms.mvc.RequestMapping;
 import bitcamp.java110.cms.service.AuthService;
 
 @Component
-public class LoginController {
+public class AuthController {
 
     @Autowired
     AuthService authService;
@@ -21,7 +21,8 @@ public class LoginController {
     @RequestMapping("/auth/login")
     public String login(
             HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response,
+            HttpSession session) throws Exception {
        
         if(request.getMethod().equals("GET")) {
             return "/auth/login.jsp";
@@ -49,7 +50,6 @@ public class LoginController {
         Member loginUser = authService.getMember(email, password, type);
         
         
-        HttpSession session = request.getSession();
         //sendRedirect는 GET 요청만 가능!!!!
         if(loginUser != null) {
             // 회원 정보를 세션에 보관한다.
@@ -78,5 +78,13 @@ public class LoginController {
             
             return "redirect:login";
         }
+    }
+    
+    @RequestMapping("/auth/logout")
+    public String logout(HttpSession session) {
+        
+        session.invalidate();
+        
+        return "redirect:login";
     }
 }

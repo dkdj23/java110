@@ -1,5 +1,6 @@
 package bitcamp.java110.cms;
 
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -25,6 +26,8 @@ public class AppConfig {
     
     @Autowired
     Environment env;
+    
+    public static ServletContext sc;
     
     @Bean(destroyMethod="close")
     public DataSource dataSource() {
@@ -66,6 +69,11 @@ public class AppConfig {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+    
+    @Bean
+    public ServletContext getServletContext() {
+        return this.sc;
     }
     
     public static void main(String[] args) {

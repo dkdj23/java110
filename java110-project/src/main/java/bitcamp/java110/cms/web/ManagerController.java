@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,12 @@ public class ManagerController {
     
     @Autowired
     ManagerService managerService;
+    
+    @Autowired
+    ServletContext sc;
 
     @RequestMapping("/manager/list")
-    public String list(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+    public String list(HttpServletRequest request) throws Exception {
         
         int pageNo = 1;
         int pageSize = 3;
@@ -50,9 +51,7 @@ public class ManagerController {
     }
     
     @RequestMapping("/manager/detail")
-    public String detail(
-            HttpServletRequest request, 
-            HttpServletResponse response) 
+    public String detail(HttpServletRequest request)
                     throws ServletException, IOException {
         // JSP 페이지에서 사용할 데이터를 준비한다.
         int no = Integer.parseInt(request.getParameter("no"));
@@ -65,9 +64,8 @@ public class ManagerController {
     }
     
     @RequestMapping("/manager/add")
-    public String ㅁㅇㅇ(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception { 
+    public String add(
+            HttpServletRequest request) throws Exception { 
         
         if(request.getMethod().equals("GET")) {
             return "/manager/form.jsp";
@@ -77,7 +75,6 @@ public class ManagerController {
         // 다음 메서드를 호출하여 어떤 인코딩인지 알려줘야
         // getParameter() 호출할 때 정상적으로 디코딩 한다.
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charSet=UTF-8");
         
         Manager m = new Manager();
         
@@ -91,8 +88,7 @@ public class ManagerController {
         Part part = request.getPart("file1");
         if (part.getSize() > 0) {
             String filename = UUID.randomUUID().toString();
-            part.write(request.getServletContext()
-                    .getRealPath("/upload/" + filename));
+            part.write(sc.getRealPath("/upload/" + filename));
             m.setPhoto(filename);
         }
         
@@ -104,9 +100,7 @@ public class ManagerController {
     }
     
     @RequestMapping("/manager/delete")
-    public String delete(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+    public String delete(HttpServletRequest request) throws Exception {
 
         int no = Integer.parseInt(request.getParameter("no"));
         
