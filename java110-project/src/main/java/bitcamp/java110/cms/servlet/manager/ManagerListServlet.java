@@ -51,13 +51,8 @@ public class ManagerListServlet extends HttpServlet {
         
         // JSP 사용할 수 있도록 ServletRequeset 보관소에 저장한다.
         request.setAttribute("list", list);
+        request.setAttribute("viewUrl", "/manager/list.jsp");
         
-        // JSP로 실행을 위임하기 전에 응답 콘텐츠의 타입을 설정한다.
-        response.setContentType("text/html;charSet=UTF-8");
-        
-        // JSP로 실행을 위임한다.
-        RequestDispatcher rd = request.getRequestDispatcher("/manager/list.jsp");
-        rd.include(request, response);
         
         // 이제 서블릿은 UI를 생성하는 코드가 없다.
         // UI 생성은 JSP 페이지에 맡겼다.

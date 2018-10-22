@@ -47,11 +47,6 @@ public class StudentListServlet extends HttpServlet {
         
         List<Student> list = studentService.list(pageNo,pageSize);
         request.setAttribute("list", list);
-        
-        response.setContentType("text/html;charSet=UTF-8");
-        
-        // 페이지 머릿말 포함하기
-        RequestDispatcher rd = request.getRequestDispatcher("/student/list.jsp");
-        rd.include(request, response);
+        request.setAttribute("viewUrl", "/student/list.jsp");
     }
 }

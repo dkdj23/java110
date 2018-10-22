@@ -7,7 +7,7 @@
 <head>
 <meta charset='EUC-KR'>
 <title>매니저 관리</title>
-<link rel='stylesheet' href='../css/common.css'>
+<link rel='stylesheet' href='/css/common.css'>
 <style>
 table, th, td {
 	border: 1px solid gray;

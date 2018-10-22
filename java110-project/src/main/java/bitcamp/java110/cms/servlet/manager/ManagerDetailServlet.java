@@ -36,10 +36,6 @@ public class ManagerDetailServlet extends HttpServlet {
         
         // JSP 페이지에서 사용할 수 있도록 ServletRequest 보관소에 저장한다.
         request.setAttribute("manager", m);
-        // JSP 페이지를 인크루드 하기 전에 콘텐트 타입을 설정한다.
-        response.setContentType("text/html;charSet=UTF-8");
-        // JSP 위임한다.
-        RequestDispatcher rd = request.getRequestDispatcher("/manager/detail.jsp");
-        rd.include(request, response);
+        request.setAttribute("viewUrl", "/manager/detail.jsp");
     }
 }

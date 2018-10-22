@@ -48,11 +48,6 @@ public class TeacherListServlet extends HttpServlet {
 
         List<Teacher> list = teacherService.list(pageNo,pageSize);
         request.setAttribute("list", list);
-        
-        response.setContentType("text/html;charSet=UTF-8");
-        
-        // 페이지 머릿말 포함하기
-        RequestDispatcher rd = request.getRequestDispatcher("/teacher/list.jsp");
-        rd.include(request, response);        
+        request.setAttribute("viewUrl", "/teacher/list.jsp");
     }
 }

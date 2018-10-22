@@ -28,10 +28,7 @@ public class StudentAddServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) 
                     throws ServletException, IOException {
-        response.setContentType("text/html;charSet=UTF-8");
-        RequestDispatcher rd = request.getRequestDispatcher("/student/form.jsp");
-        rd.include(request, response);
-        
+        request.setAttribute("viewUrl", "/student/form.jsp");
     }
     
     @Override
@@ -64,13 +61,14 @@ public class StudentAddServlet extends HttpServlet {
             }
             
             studentService.add(s);
-            response.sendRedirect("list");
+            request.setAttribute("viewUrl", "redirect:list");
         } catch (Exception e) {
             request.setAttribute("error", e);
             request.setAttribute("message", "학생 등록 오류!");
             request.setAttribute("refresh", "3;url=list");
             
-            request.getRequestDispatcher("/error").forward(request, response);
+//            request.getRequestDispatcher("/error").forward(request, response);
+            request.setAttribute("viewUrl", "/error.jsp");
         }
     }
 }

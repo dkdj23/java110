@@ -27,16 +27,18 @@ public class AuthFilter implements Filter {
         
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRep = (HttpServletResponse) response;
-        String servletPath = httpReq.getServletPath();
+        String pathInfo = httpReq.getPathInfo();
         
-        if(servletPath.endsWith("add") || (servletPath.endsWith("delete"))) {
-            
-            // 로그인 여부 검사
-            HttpSession session = httpReq.getSession();
-            Member loginUser = (Member) session.getAttribute("loginUser");
-            if (loginUser == null) {
-                httpRep.sendRedirect("/auth/login");
-                return;
+        if(pathInfo != null) {
+            if(pathInfo.endsWith("add") || (pathInfo.endsWith("delete"))) {
+                
+                // 로그인 여부 검사
+                HttpSession session = httpReq.getSession();
+                Member loginUser = (Member) session.getAttribute("loginUser");
+                if (loginUser == null) {
+                    httpRep.sendRedirect("/app/auth/login");
+                    return;
+                }
             }
         }
         chain.doFilter(request, response);
