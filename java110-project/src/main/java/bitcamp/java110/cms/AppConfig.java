@@ -1,6 +1,5 @@
 package bitcamp.java110.cms;
 
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
@@ -9,13 +8,10 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-
-import bitcamp.java110.cms.service.ManagerService;
 
 @ComponentScan(basePackages="bitcamp.java110.cms")
 //<properties resource="bitcamp/java110/cms/conf/jdbc.properties"></properties>
@@ -27,7 +23,9 @@ public class AppConfig {
     @Autowired
     Environment env;
     
-    public static ServletContext sc;
+    public AppConfig() {
+        System.out.println("AppConfig() 호출됨");
+    }
     
     @Bean(destroyMethod="close")
     public DataSource dataSource() {
@@ -70,12 +68,8 @@ public class AppConfig {
             throw new RuntimeException();
         }
     }
-    
-    @Bean
-    public ServletContext getServletContext() {
-        return this.sc;
-    }
-    
+
+    /*
     public static void main(String[] args) {
         // Java Config를 사용할 때는 다음 IoC 컨테이너를 사용한다.
         ApplicationContext iocContainer =
@@ -103,5 +97,6 @@ public class AppConfig {
 //        Properties props = System.getProperties();
 //        Set<Entry> props.
     }
+    */
     
 }
