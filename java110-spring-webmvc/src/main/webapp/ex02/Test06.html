@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Test06 페이지 컨트롤러 테스트하기</h1>
+<button id="btn1">요청: Accept: "text/plain"</button><br>
+<button id="btn2">요청: Accept: "text/html,text/plain"</button><br>
+<button id="btn3">요청: Accept: "text/html"</button><br>
+<button id="btn4">요청</button><br>
+<button id="btn5">요청 : bitcamp/aaa,bitcamp/bbb</button><br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$('#btn1').click(()=>{
+   jQuery.ajax("http://localhost:8888/app/ex02/test06",{
+       method: 'get',
+       headers: {
+           accept: 'text/plain'
+       },
+       success: function(result){
+           alert(result);
+       },
+       error: function(xhr, status, msg){
+           console.log(status);
+           console.log(msg);
+       }
+       
+   }) 
+});
+
+$('#btn2').click(()=>{
+   jQuery.ajax("http://localhost:8888/app/ex02/test06",{
+       method: 'get',
+       headers: {
+           accept: "text/html,text/plain"
+       },
+       success: function(result){
+           alert(result);
+       },
+       error: function(xhr, status, msg){
+           console.log(status);
+           console.log(msg);
+       }
+   }) 
+});
+
+$('#btn3').click(()=>{
+    jQuery.ajax("http://localhost:8888/app/ex02/test06",{
+        method: 'get',
+        headers: {
+            accept: "text/html"
+        },
+        success: function(result){
+            alert(result);
+        },
+        error: function(xhr, status, msg){
+            console.log(status);
+            console.log(msg);
+        }
+    }) 
+ });
+ 
+$('#btn4').click(()=>{
+    jQuery.ajax("http://localhost:8888/app/ex02/test06",{
+        method: 'get',
+        success: function(result){
+            alert(result);
+        },
+        error: function(xhr, status, msg){
+            console.log(status);
+            console.log(msg);
+        }
+    }) 
+ });
+
+$('#btn5').click(()=>{
+    jQuery.ajax("http://localhost:8888/app/ex02/test06",{
+        method: 'get',
+        headers: {
+            accept: "bitcamp/aaa,bitcamp/bbb"
+        },
+        success: function(result){
+            alert(result);
+        },
+        error: function(xhr, status, msg){
+            console.log(status);
+            console.log(msg);
+        }
+    }) 
+ });
+ 
+</script>
+</body>
+</html>
