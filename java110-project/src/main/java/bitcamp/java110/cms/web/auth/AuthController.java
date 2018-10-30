@@ -5,20 +5,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import bitcamp.java110.cms.domain.Member;
 import bitcamp.java110.cms.service.AuthService;
 
+@RequestMapping("/auth")
 @Controller
 public class AuthController {
 
-    @Autowired
     AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @GetMapping("form")
+    public void form() {}
     
-    @RequestMapping("/auth/login")
+    
+    @PostMapping("login")
     public String login(
             String type,
             String email,
@@ -27,10 +36,6 @@ public class AuthController {
             HttpServletRequest request, 
             HttpServletResponse response,
             HttpSession session) throws Exception {
-       
-        if(request.getMethod().equals("GET")) {
-            return "/auth/login.jsp";
-        }
         
         // 이메일 저장하기를 체크했다면
         if (save != null) {
@@ -73,15 +78,15 @@ public class AuthController {
             // 실패한다면 무조건 세션을 무효화시킨다.
             session.invalidate();
             
-            return "redirect:login";
+            return "redirect:form";
         }
     }
     
-    @RequestMapping("/auth/logout")
+    @GetMapping("logout")
     public String logout(HttpSession session) {
         
         session.invalidate();
         
-        return "redirect:login";
+        return "redirect:form";
     }
 }
