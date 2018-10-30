@@ -7,14 +7,13 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bitcamp.java110.cms.domain.Member;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class AuthFilter implements Filter {
 
     
@@ -36,7 +35,7 @@ public class AuthFilter implements Filter {
                 HttpSession session = httpReq.getSession();
                 Member loginUser = (Member) session.getAttribute("loginUser");
                 if (loginUser == null) {
-                    httpRep.sendRedirect("/app/auth/login");
+                    httpRep.sendRedirect("/app/auth/form");
                     return;
                 }
             }

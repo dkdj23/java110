@@ -18,5 +18,9 @@
 	    <property name="prefix" value="/WEB-INF/jsp/"/>
 	    <property name="suffix" value=".jsp"/>
 	</bean>
+	
+	<!-- WebConfig 클래스에서 정의했기 떄문에 제거한다. -->
+	<!-- 
     <mvc:annotation-driven enable-matrix-variables="true" />
+     -->
 </beans>
