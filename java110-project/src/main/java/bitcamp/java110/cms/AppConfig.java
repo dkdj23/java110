@@ -12,7 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+// 트랜잭션 관리자를 활성화하려면 다음 애노테이션을 붙여야 한다.
+@EnableTransactionManagement
 @ComponentScan(basePackages="bitcamp.java110.cms")
 //<properties resource="bitcamp/java110/cms/conf/jdbc.properties"></properties>
 @PropertySource("classpath:/bitcamp/java110/cms/conf/jdbc.properties")
@@ -67,6 +72,23 @@ public class AppConfig {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+    
+    // 트랜잭션 관리자의 이름은 반드시 "transactionManager" 이어야 한다.
+    // 그래서 메서드 이름을 다음과 같이 지은 것이다.
+    // Spring에서 트랜잭션 관리자를 찾을 때 이 이름으로 찾는다.
+    // 만약 트랜잭션 이름을 다른 이름으로 지었다면
+    // 트랜잭션 관리 설정에서그 이름을 알려줘야 한다. 
+    
+    // @Bean   으로 컨테이너에 객체 저장할때 메서드 이름으로 저장됨!!
+    @Bean
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        // 트랜잭션 관리자가 하는 일은 DB 커넥션의 commit과 rollback을 다루는 것이다.
+        // 따라서 트랜잭션 관리자는 DB 커넥션을 제공해주는 DataSource(DB 커넥션 풀)가 필요하다.
+        // 그래서 트랜잭션 관리자를 만들 때 반드시 DataSource 객체를 넘겨줘야 한다.
+        // 물론 관리자 객체를 만든 후에 세터를 호출해서 넘겨줘도 된다.
+        
+        return new DataSourceTransactionManager(dataSource);
     }
 
     /*

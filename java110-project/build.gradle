@@ -16,6 +16,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.1.RELEASE'
 
+    // AOP 라이브러리
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.2'
+    
     // Commons DBCP 라이브러리
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
