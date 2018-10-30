@@ -25,7 +25,7 @@
         @MatrixVariable 애노테이션을 인식하려면 
         enable-matrix-variables 속성 값을 "true" 로 설정해야 한다. 
       -->
-     <mvc:annotation-driven enable-matrix-variables="true"/>
+     
      
     <!-- Servlet 3.0에서 제공하는 multipart/form-data 처리기를 사용하지 않고
          (서블릿 컨테이너가 multipart/form-data를 처리하는 것이 아니라) 
@@ -47,7 +47,7 @@
 	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 	    <property name="prefix" value="/WEB-INF/jsp/"/>
 	    <property name="suffix" value=".jsp"/>
-    </bean>
+    <mvc:annotation-driven enable-matrix-variables="true" /></bean>
     
     
     <!-- 예전에는 JSON 데이터를 처리하기 위해 다음의 객체를 등록하였다.
