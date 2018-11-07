@@ -55,10 +55,16 @@ if("".equals(email)) {
 			</tr>
 			<tr>
 				<th></th>
-				<td><button>로그인</button></td>
+				<td><button>로그인</button>
+				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+                </td>
 			</tr>
 		</table>
 	</form>
+	
+	
+	
 </body>
 </html>
 

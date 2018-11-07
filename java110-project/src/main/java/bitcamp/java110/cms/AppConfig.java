@@ -36,7 +36,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
                         pattern="bitcamp.java110.cms.web.*"))
 */
 //<properties resource="bitcamp/java110/cms/conf/jdbc.properties"></properties>
-@PropertySource("classpath:/bitcamp/java110/cms/conf/jdbc.properties")
+@PropertySource({"classpath:/bitcamp/java110/cms/conf/jdbc.properties",
+                 "classpath:/bitcamp/java110/cms/conf/sec.properties"})
 // Mybatis에서 자동으로 DAO를 생성할 떄 사용할 인터페이스가 들어 있는 패키지 설정 >> <mapper namespace="bitcamp.java110.cms.dao.ManagerDao">  
 @MapperScan("bitcamp.java110.cms.dao")
 public class AppConfig {

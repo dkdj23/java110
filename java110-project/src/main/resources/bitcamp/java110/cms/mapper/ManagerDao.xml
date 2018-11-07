@@ -44,6 +44,12 @@
      where m.mno=#{value}
     </select>
     
+    <select id="findByEmail" resultMap="managerMap" parameterType="string">
+        <include refid="select1"></include>
+        where 
+            m.email=#{value}
+    </select>
+    
     <select id="findByEmailPassword" resultMap="managerMap" parameterType="map">
     <include refid="select1"/>
      where 

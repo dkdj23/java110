@@ -47,7 +47,8 @@
 	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 	    <property name="prefix" value="/WEB-INF/jsp/"/>
 	    <property name="suffix" value=".jsp"/>
-    <mvc:annotation-driven enable-matrix-variables="true" /></bean>
+	</bean>
+    <mvc:annotation-driven enable-matrix-variables="true" />
     
     
     <!-- 예전에는 JSON 데이터를 처리하기 위해 다음의 객체를 등록하였다.
